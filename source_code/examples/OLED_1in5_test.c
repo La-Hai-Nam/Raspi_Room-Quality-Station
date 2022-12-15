@@ -18,8 +18,7 @@
 #
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#.# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS OR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -31,8 +30,16 @@
 #include "test.h"
 #include "interrupt.h"
 #include "OLED_1in5.h"
+int count = 0;
 
-
+eventHandler button_pressed(){
+	if(count == 4){
+		count = 0;
+	}else{
+		count++;
+	}
+	return 0;
+}
 int OLED_1in5_test(void)
 {
 	printf("1.5inch OLED test demo\n");
@@ -58,8 +65,8 @@ int OLED_1in5_test(void)
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
-	attachGPIO(4, "both", button_pressed());
-	attachGPIO(5, "both", end_button_pressed());
+	attach_GPIO(4, "both", button_pressed());
+	//attachGPIO(5, "falling", end_button_pressed());
 	while(1) {
 
 		// Show image on page2

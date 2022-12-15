@@ -25,8 +25,8 @@
 #include <unistd.h>
 #include "Debug.h"
 
-#define USE_SPI 0
-#define USE_IIC 1
+#define USE_SPI 1
+#define USE_IIC 0
 #define IIC_CMD        0X00
 #define IIC_RAM        0X40
 
@@ -39,7 +39,7 @@
 #define UDOUBLE uint32_t
 
 //OLED Define
-#define OLED_CS         8		
+#define OLED_CS         10		
 #define OLED_RST        27	
 #define OLED_DC         25	
 
