@@ -18,7 +18,8 @@
 #
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-#.# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS OR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -29,7 +30,6 @@
 ******************************************************************************/
 #include "test.h"
 #include "OLED_1in5.h"
-<<<<<<< HEAD
 #include "interrupt.h"
 
 int count = 0;
@@ -38,22 +38,12 @@ eventHandler button_pressed(){
 	if(count == 4){
 		count = 0;
 		printf("y");
-=======
-int count = 0;
-
-eventHandler button_pressed(){
-	if(count == 4){
-		count = 0;
->>>>>>> 998a8e9188309535fb6ff35217277ef3ac4c3da6
 	}else{
 		count++;
 	}
 	return 0;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 998a8e9188309535fb6ff35217277ef3ac4c3da6
 int OLED_1in5_test(void)
 {
 	printf("1.5inch OLED test demo\n");
@@ -79,12 +69,7 @@ int OLED_1in5_test(void)
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
-<<<<<<< HEAD
 	attach_GPIO(BUTTON, IN, button_pressed());
-=======
-	attach_GPIO(4, "both", button_pressed());
-	//attachGPIO(5, "falling", end_button_pressed());
->>>>>>> 998a8e9188309535fb6ff35217277ef3ac4c3da6
 	while(1) {
 	
 		// printf("Drawing:page 1\r\n");
