@@ -1,13 +1,16 @@
 /*****************************************************************************
-* | File      	:   test.h
+* | File      	:	Debug.h
 * | Author      :   Waveshare team
-* | Function    :   
+* | Function    :	debug with printf
 * | Info        :
-*
+*   Image scanning
+*      Please use progressive scanning to generate images or fonts
 *----------------
-* |	This version:   V1.0
-* | Date        :   2020-08-13
-* | Info        :   Basic version
+* |	This version:   V2.0
+* | Date        :   2020-06-17
+* | Info        :   
+*   1.USE_DEBUG -> DEBUG, If you need to see the debug information, 
+*    clear the execution: make DEBUG=-DDEBUG
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documnetation files (the "Software"), to deal
@@ -27,24 +30,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
+
 ******************************************************************************/
-#ifndef _TEST_H_
-#define _TEST_H_
+#ifndef __DEBUG_H
+#define __DEBUG_H
 
-#include "DEV_Config.h"
-#include "GUI_Paint.h"
-#include "GUI_BMPfile.h"
-#include "Debug.h"
+#include <stdio.h>
 
-#include <stdlib.h> // malloc() free()
-#include <math.h>
-
-int OLED_0in91_test(void);
-int OLED_0in95_rgb_test(void);
-int OLED_0in96_test(void);
-int OLED_1in3_test(void);
-int OLED_1in3_c_test(void);
-int OLED_1in5_test(void);
-int OLED_1in5_rgb_test(void);
-int OLED_1in51_test(void);
+#if DEBUG
+	#define Debug(__info,...) printf("Debug: " __info,##__VA_ARGS__)
+#else
+	#define Debug(__info,...)  
 #endif
+
+#endif
+

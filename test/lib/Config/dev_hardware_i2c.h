@@ -1,13 +1,13 @@
 /*****************************************************************************
-* | File      	:   test.h
+* | File        :   dev_hardware_i2c.h
 * | Author      :   Waveshare team
-* | Function    :   
+* | Function    :   Read and write /dev/i2C,  hardware I2C
 * | Info        :
-*
 *----------------
 * |	This version:   V1.0
-* | Date        :   2020-08-13
+* | Date        :   2019-06-26
 * | Info        :   Basic version
+*
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documnetation files (the "Software"), to deal
@@ -28,23 +28,34 @@
 # THE SOFTWARE.
 #
 ******************************************************************************/
-#ifndef _TEST_H_
-#define _TEST_H_
+#ifndef __DEV_HARDWARE_I2C_
+#define __DEV_HARDWARE_I2C_
 
-#include "DEV_Config.h"
-#include "GUI_Paint.h"
-#include "GUI_BMPfile.h"
-#include "Debug.h"
+#include <stdint.h>
 
-#include <stdlib.h> // malloc() free()
-#include <math.h>
 
-int OLED_0in91_test(void);
-int OLED_0in95_rgb_test(void);
-int OLED_0in96_test(void);
-int OLED_1in3_test(void);
-int OLED_1in3_c_test(void);
-int OLED_1in5_test(void);
-int OLED_1in5_rgb_test(void);
-int OLED_1in51_test(void);
+#define DEV_HARDWARE_I2C_DEBUG 0
+#if DEV_HARDWARE_I2C_DEBUG
+#define DEV_HARDWARE_I2C_Debug(__info,...) printf("Debug: " __info,##__VA_ARGS__)
+#else
+#define DEV_HARDWARE_I2C_Debug(__info,...)
+#endif
+
+/**
+ * Define I2C attribute
+**/
+typedef struct I2CStruct {
+    //GPIO
+    uint16_t SCL_PIN;
+    uint16_t SDA_PIN;
+    
+    int fd; //I2C device file descriptor
+    uint16_t addr; //I2C device address
+} HARDWARE_I2C;
+
+void DEV_HARDWARE_I2C_begin(char *i2c_device);
+void DEV_HARDWARE_I2C_end(void);
+void DEV_HARDWARE_I2C_setSlaveAddress(uint8_t addr);
+uint8_t DEV_HARDWARE_I2C_write(const char * buf, uint32_t len);
+uint8_t DEV_HARDWARE_I2C_read(uint8_t reg, char* buf, uint32_t len);
 #endif

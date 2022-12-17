@@ -1,13 +1,13 @@
 /*****************************************************************************
-* | File      	:   test.h
+* | File      	:   OLED_1in5.h
 * | Author      :   Waveshare team
-* | Function    :   
+* | Function    :   1.5inch OLED Module Drive function
 * | Info        :
-*
 *----------------
-* |	This version:   V1.0
-* | Date        :   2020-08-13
-* | Info        :   Basic version
+* |	This version:   V2.0
+* | Date        :   2020-08-15
+* | Info        :
+* -----------------------------------------------------------------------------
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documnetation files (the "Software"), to deal
@@ -28,23 +28,23 @@
 # THE SOFTWARE.
 #
 ******************************************************************************/
-#ifndef _TEST_H_
-#define _TEST_H_
+#ifndef __OLED_1IN5_H
+#define __OLED_1IN5_H		
 
 #include "DEV_Config.h"
-#include "GUI_Paint.h"
-#include "GUI_BMPfile.h"
-#include "Debug.h"
 
-#include <stdlib.h> // malloc() free()
-#include <math.h>
+/********************************************************************************
+function:	
+		Define the full screen height length of the display
+********************************************************************************/
 
-int OLED_0in91_test(void);
-int OLED_0in95_rgb_test(void);
-int OLED_0in96_test(void);
-int OLED_1in3_test(void);
-int OLED_1in3_c_test(void);
-int OLED_1in5_test(void);
-int OLED_1in5_rgb_test(void);
-int OLED_1in51_test(void);
-#endif
+#define OLED_1in5_WIDTH  128//OLED width
+#define OLED_1in5_HEIGHT 128 //OLED height
+
+
+void OLED_1in5_Init(void);
+void OLED_1in5_Clear(void);
+void OLED_1in5_Display(UBYTE *Image);
+
+#endif  
+	 
