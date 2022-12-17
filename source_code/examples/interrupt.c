@@ -49,10 +49,17 @@ int BUTTON_direction(int pin, char* direction){
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
     int fd;
+<<<<<<< HEAD
     snprintf(path, DIRECTION_MAX, "sys/class/gpio/gpio%d/direction", pin);printf("\n%d" , path);
     fd = open(path, O_WRONLY);
     if(fd == -1){
         printf("\nfailed to open direction\n");
+=======
+    snprintf(path, DIRECTION_MAX, "sys/class/gpio/gpio%d/direction", pin);
+    fd = open(path, O_WRONLY);
+    if(fd == -1){
+        printf("failed to open direction");
+>>>>>>> 998a8e9188309535fb6ff35217277ef3ac4c3da6
         return -3;
     }
 
