@@ -32,17 +32,6 @@
 #include "OLED_1in5.h"
 #include "interrupt.h"
 
-int count = 0;
-
-eventHandler button_pressed(){
-	if(count == 4){
-		count = 0;
-		printf("y");
-	}else{
-		count++;
-	}
-	return 0;
-}
 
 int OLED_1in5_test(void)
 {
@@ -69,47 +58,31 @@ int OLED_1in5_test(void)
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
-	attach_GPIO(BUTTON, IN, button_pressed());
+	attach_GPIO(BUTTON, IN, FALLING, button_pressed());
 	while(1) {
-	
-		// printf("Drawing:page 1\r\n");
-		// Paint_DrawString_EN(10, 0, "waveshare", &Font16, 0x1, 0xb);
 
-		// OLED_1in5_Display(BlackImage);
-		// DEV_Delay_ms(2000);			
-		// Paint_Clear(BLACK);
-
-		// OLED_1in5_Clear();
-		if(BUTTON_read(BUTTON) == 1)
-		{
-			if(count == 4){
-				count = 0;
-			}else{
-				count++;
-				}
-		}
-		switch (count) {
-			case 0:
-				printf("temp\r\n");			
-				Paint_DrawString_EN(10, 0, "temp", &Font16, 0x1, 0xb);
-				OLED_1in5_Display(BlackImage);
-				// DEV_Delay_ms(2000);			
-				break;
+		switch (get_count()) {
 			case 1:
-				printf("humidity\r\n");			
-				Paint_DrawString_EN(10, 0, "humidity", &Font16, 0x1, 0xb);
+				printf("temp\r\n");			
+				Paint_DrawString_EN(10, 0, "temp", &Font16, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
 				// DEV_Delay_ms(2000);			
 				break;
 			case 2:
-				printf("pressure\r\n");			
-				Paint_DrawString_EN(10, 0, "pressure", &Font16, 0x1, 0xb);
+				printf("humidity\r\n");			
+				Paint_DrawString_EN(10, 0, "humidity", &Font16, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
 				// DEV_Delay_ms(2000);			
 				break;
 			case 3:
+				printf("pressure\r\n");			
+				Paint_DrawString_EN(10, 0, "pressure", &Font16, WHITE, WHITE);
+				OLED_1in5_Display(BlackImage);
+				// DEV_Delay_ms(2000);			
+				break;
+			case 4:
 				printf("airquality\r\n");			
-				Paint_DrawString_EN(10, 0, "airquality", &Font16, 0x1, 0xb);
+				Paint_DrawString_EN(10, 0, "airquality", &Font16, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
 				// DEV_Delay_ms(2000);			
 				break;
