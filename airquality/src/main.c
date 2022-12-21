@@ -5,7 +5,7 @@
 #include "bme680.h"
 #include "sensor.h"
 #include "bme680_defs.h"
-
+#include "bme_test.h"
 
 void  Handler(int signo)
 {
@@ -23,16 +23,20 @@ int main(int argc, char *argv[])
 {
     // Exception handling:ctrl + c
     signal(SIGINT, Handler);
-
+    bmedata s;
+    s.temperature = 10.0;
+    s.pressure = 9.0;
+    s.humidity = 8.0;
+    s.gas_resistance  =7.0;
 
     struct bme680_dev* sensor = (struct bme680_dev*)malloc(sizeof(struct bme680_dev));
-	struct bme680_field_data* data = (struct bme680_field_data*)malloc(sizeof(struct bme680_field_data));
+    struct bme680_field_data* data = (struct bme680_field_data*)malloc(sizeof(struct bme680_field_data));
 
     OLED_1in5_test();
     bme_init(sensor);
 
     while (1){
-        OLED_while(bme_while(sensor, data));
+        OLED_while(s);
         
     }
 

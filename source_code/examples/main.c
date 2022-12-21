@@ -7,6 +7,7 @@ void  Handler(int signo)
 {
     //System Exit
     printf("\r\nHandler:exit\r\n");
+    Paint_Clear(BLACK);
     OLED_1in5_Clear();
     DEV_ModuleExit();
 

@@ -33,7 +33,10 @@
 #include "OLED_1in5.h"
 #include "interrupt.h"
 #include "bme_test.h"
-
+/******************************************************************************
+function:	Initialize Display, Black image and interrupt button on GPIO5 for push button:
+Info:
+******************************************************************************/
 int OLED_1in5_test(void)
 {
 	printf("1.5inch OLED test demo\n");
@@ -63,6 +66,11 @@ int OLED_1in5_test(void)
 	
 }
 
+/******************************************************************************
+function:	Get sensor data from bme_test.c and display sensor data on the OLEDdisplay depending on count (if button_pressed() == true){ count++; }:
+Info:
+******************************************************************************/
+
 OLED_while(bmedata s) {
 			
 	char temperature[MAX];
@@ -75,6 +83,11 @@ OLED_while(bmedata s) {
 			printf("Failed to apply for black memory...\r\n");
 			return -1;
 		}
+		Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);	
+		Paint_SetScale(16);
+		Paint_SelectImage(BlackImage);
+		DEV_Delay_ms(500);
+		Paint_Clear(BLACK);
 		snprintf(temperature, MAX, "%.2f", s.temperature);
 		snprintf(pressure, MAX, "%.2f", s.pressure);
 		snprintf(humidity, MAX, "%.2f", s.humidity);
@@ -86,29 +99,28 @@ OLED_while(bmedata s) {
 				Paint_DrawString_EN(10, 0, "Temperature", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, temperature, &Font12, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
-				// DEV_Delay_ms(2000);				
+				DEV_Delay_ms(100);				
 				break;
 			case 2:
 				printf("humidity: %s\r\n", humidity);			
-				Paint_DrawString_EN(10, 0, "pressure", &Font12, WHITE, WHITE);
-				Paint_DrawString_EN(64, 56, pressure, &Font12, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(2000);				
-				break;
-			case 3:
-				printf("pressure: %s\r\n", pressure);			
 				Paint_DrawString_EN(10, 0, "humidity", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, humidity, &Font12, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(2000);				
+				DEV_Delay_ms(100);				
+				break;
+			case 3:
+				printf("pressure: %s\r\n", pressure);			
+				Paint_DrawString_EN(10, 0, "pressure", &Font12, WHITE, WHITE);
+				Paint_DrawString_EN(64, 56, pressure, &Font12, WHITE, WHITE);
+				OLED_1in5_Display(BlackImage);
+				DEV_Delay_ms(100);				
 				break;
 			case 4:
-				DEV_Delay_ms(2000);	
 				printf("airquality: %s\r\n", gas_resistance);			
 				Paint_DrawString_EN(10, 0, "gas_resistance", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, gas_resistance, &Font12, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(2000);			
+				DEV_Delay_ms(100);			
 				break;
 		}
 	}

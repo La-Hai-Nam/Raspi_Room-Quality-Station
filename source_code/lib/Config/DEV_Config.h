@@ -39,7 +39,7 @@
 #define UDOUBLE uint32_t
 
 //OLED Define
-#define OLED_CS         10		
+#define OLED_CS         8		
 #define OLED_RST        27	
 #define OLED_DC         25	
 

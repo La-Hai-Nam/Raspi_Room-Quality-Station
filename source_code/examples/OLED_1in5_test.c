@@ -55,36 +55,41 @@ int OLED_1in5_test(void)
 	Paint_SetScale(16);
 	printf("Drawing\r\n");
 	//1.Select Image
-	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
 	attach_GPIO(BUTTON, IN, FALLING, button_pressed());
+
+				// DEV_Delay_ms(2000);	
 	while(1) {
 
 		switch (get_count()) {
 			case 1:
-				printf("temp\r\n");			
-				Paint_DrawString_EN(10, 0, "temp", &Font16, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
-				// DEV_Delay_ms(2000);			
+				printf("temp\r\n");		
+				Paint_DrawString_EN(10, 0, "Temperature", &Font12, WHITE, WHITE);
+				Paint_DrawString_EN(64, 56, "Temperature", &Font12, WHITE, WHITE);
+				OLED_1in5_Display(BlackImage);	
+				DEV_Delay_ms(2000);			
 				break;
 			case 2:
 				printf("humidity\r\n");			
-				Paint_DrawString_EN(10, 0, "humidity", &Font16, WHITE, WHITE);
+				Paint_DrawString_EN(10, 0, "Humidity", &Font12, WHITE, WHITE);
+				Paint_DrawString_EN(64, 56, "Humidity", &Font12, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
-				// DEV_Delay_ms(2000);			
+				DEV_Delay_ms(1000);			
 				break;
 			case 3:
 				printf("pressure\r\n");			
-				Paint_DrawString_EN(10, 0, "pressure", &Font16, WHITE, WHITE);
+				Paint_DrawString_EN(10, 0, "Pressure", &Font12, WHITE, WHITE);
+				Paint_DrawString_EN(64, 56, "Pressure", &Font12, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
-				// DEV_Delay_ms(2000);			
+				DEV_Delay_ms(1000);			
 				break;
 			case 4:
 				printf("airquality\r\n");			
-				Paint_DrawString_EN(10, 0, "airquality", &Font16, WHITE, WHITE);
+				Paint_DrawString_EN(10, 0, "Airquality", &Font12, WHITE, WHITE);
+				Paint_DrawString_EN(64, 56, "Airquality", &Font12, WHITE, WHITE);
 				OLED_1in5_Display(BlackImage);
-				// DEV_Delay_ms(2000);			
+				DEV_Delay_ms(1000);			
 				break;
 		}
 	}

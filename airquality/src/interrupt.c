@@ -11,6 +11,11 @@
 intVec intData;
 int count = 0;
 
+/******************************************************************************
+function:	ALL sysfs functions to use GPIO_Pins 
+Info:
+******************************************************************************/
+
 int BUTTON_export(int pin){
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
@@ -104,6 +109,11 @@ int BUTTON_read(int pin){
 	return(atoi(value_str));
 }
 
+/******************************************************************************
+function:	Attach GPIO Pin to thread which runs simultanously to the code
+Info:
+******************************************************************************/
+
 int attach_GPIO(int gpio,char* direction, char *edge, eventHandler func) {
     BUTTON_export(gpio);
     //BUTTON_direction(gpio, direction);
@@ -116,13 +126,16 @@ int attach_GPIO(int gpio,char* direction, char *edge, eventHandler func) {
     }
     return 0;
 }
-
+/******************************************************************************
+function:	Check if GPIO value is changed with debounce and increment count in button_pressed()
+Info:
+******************************************************************************/
 void *wait_interrupt(void *arg) {
     
     while(1){
         if(BUTTON_read(BUTTON) == 1){
             DEV_Delay_ms(15);
-            if(BUTTON_read(BUTTON) == 1){
+            if(BUTTON_read(BUTTON) == 0){
                 button_pressed();
                 Paint_Clear(BLACK);
                 DEV_Delay_ms(100);
