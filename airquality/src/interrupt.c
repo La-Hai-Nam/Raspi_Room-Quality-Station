@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "GUI_Paint.h"
+#include "OLED_1in5.h"
 
 intVec intData;
 int count = 0;
@@ -137,8 +138,6 @@ void *wait_interrupt(void *arg) {
             DEV_Delay_ms(15);
             if(BUTTON_read(BUTTON) == 0){
                 button_pressed();
-                Paint_Clear(BLACK);
-                DEV_Delay_ms(100);
             }
         }
     }

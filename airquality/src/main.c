@@ -23,11 +23,6 @@ int main(int argc, char *argv[])
 {
     // Exception handling:ctrl + c
     signal(SIGINT, Handler);
-    bmedata s;
-    s.temperature = 10.0;
-    s.pressure = 9.0;
-    s.humidity = 8.0;
-    s.gas_resistance  =7.0;
 
     struct bme680_dev* sensor = (struct bme680_dev*)malloc(sizeof(struct bme680_dev));
     struct bme680_field_data* data = (struct bme680_field_data*)malloc(sizeof(struct bme680_field_data));
@@ -36,7 +31,7 @@ int main(int argc, char *argv[])
     bme_init(sensor);
 
     while (1){
-        OLED_while(s);
+        OLED_while(bme_while(sensor, data));
         
     }
 
