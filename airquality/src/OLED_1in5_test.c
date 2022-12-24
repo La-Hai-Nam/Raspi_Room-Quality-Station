@@ -93,6 +93,8 @@ OLED_while(bmedata s) {
 		snprintf(humidity, MAX, "%.2f", s.humidity);
 		snprintf(gas_resistance, MAX, "%.2f", s.gas_resistance);
 		
+		char temperature_unit[MAX] = strcat(temperature, "%%");
+
 		switch (get_count()) {
 			case 1:
 				printf("temperature: %s\r\n", temperature);			
