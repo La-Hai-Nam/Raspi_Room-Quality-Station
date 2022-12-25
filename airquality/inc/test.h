@@ -39,12 +39,6 @@
 #include <stdlib.h> // malloc() free()
 #include <math.h>
 
-int OLED_0in91_test(void);
-int OLED_0in95_rgb_test(void);
-int OLED_0in96_test(void);
-int OLED_1in3_test(void);
-int OLED_1in3_c_test(void);
-int OLED_1in5_test(void);
-int OLED_1in5_rgb_test(void);
-int OLED_1in51_test(void);
+void OLED_1in5_test(void);
+
 #endif

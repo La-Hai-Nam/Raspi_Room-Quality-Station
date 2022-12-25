@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "interrupt.h"
 
 int SYSFS_GPIO_Export(int Pin)
 {
@@ -106,6 +107,27 @@ int SYSFS_GPIO_Direction(int Pin, int Dir)
     close(fd);
     return 0;
 }
+
+int SYSFS_GPIO_Edge(int pin, char* edge){
+    char path[DIR_MAXSIZ];
+    char buffer[DIR_MAXSIZ];
+    int len;
+    int fd;
+    snprintf(path, DIRECTION_MAX, "sys/class/gpio/gpio%d/edge", pin);
+    fd = open(path, O_WRONLY);
+    if(fd < 0){
+        printf("\nfailed to open edge\n");
+        return -3;
+    }
+    len = snprintf(buffer, BUFFER_MAX, "%d", *edge);
+    write(fd ,buffer, len);
+
+    SYSFS_GPIO_Debug( "esge: Pin%d\r\n", Pin);
+
+    close(fd);
+    return 0;
+}
+
 
 int SYSFS_GPIO_Read(int Pin)
 {

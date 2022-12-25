@@ -49,8 +49,7 @@ void OLED_1in5_Init(void);
 void OLED_1in5_Clear(void);
 void OLED_1in5_Display(UBYTE *Image);
 void OLED_while(bmedata s);
-int OLED_1in5_test(void);
-
+void OLED_1in5_test(void);
 
 #endif  
 	 

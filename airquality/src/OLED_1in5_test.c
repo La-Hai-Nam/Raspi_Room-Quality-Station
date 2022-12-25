@@ -419,7 +419,7 @@ void Paint_Cloud(){
 function:	screensaver that turns off display after 10 min of same state 
 Info:
 ******************************************************************************/
-screensaver(){
+void screensaver(){
 	if(get_do_once() == 0){
 		first_time = (int)time(NULL);
 		increment_do_once();
@@ -435,31 +435,33 @@ function:	Initialize Display, Black image and interrupt button on GPIO5 for push
 Info:
 ******************************************************************************/
 
-int OLED_1in5_test(void)
+void OLED_1in5_test(void)
 {
+	//init the display spi and all registers
 	printf("1.5inch OLED test demo\n");
 	if(DEV_ModuleInit() != 0) {
-		return -1;
+		return;
 	}
 	  
 	printf("OLED Init...\r\n");
 	OLED_1in5_Init();
 	DEV_Delay_ms(500);	
-	// 0.Create a new image cache
+	// Create a new image cache which is fully black
 	UBYTE *BlackImage;
 	UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): (OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
 	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
 			printf("Failed to apply for black memory...\r\n");
-			return -1;
+			return;
 	}
 	printf("Paint_NewImage\r\n");
 	Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);	
 	Paint_SetScale(16);
 	printf("Drawing\r\n");
-	//1.Select Image
+	//print black image on display
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
+	//interrupt function
 	attach_GPIO(BUTTON_DATA, BUTTON_ONOFF, IN, FALLING);
 	
 }
@@ -469,20 +471,14 @@ function:	Get sensor data from bme_test.c and display sensor data on the OLEDdis
 Info:
 ******************************************************************************/
 
-OLED_while(bmedata s) {
+void OLED_while(bmedata s) {
 			
 	char temperature[MAX];
 	char pressure[MAX];
 	char humidity[MAX];
 	char gas_resistance[MAX];
-	char gas [MAX];
-
-
-	float hum_weighting = 0.25; // so hum effect is 25% of the total air quality score
-	float gas_weighting = 0.75; // so gas effect is 75% of the total air quality score
 
 	float hum_score, gas_score;
-	float gas_reference = 250000;
 	float hum_reference = 40;
 
 	char temperature_unit[MAX] = "C";
@@ -497,7 +493,7 @@ OLED_while(bmedata s) {
 	UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): 	(OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
 	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
 		printf("Failed to apply for black memory...\r\n");
-		return -1;
+		return;
 	}
 	Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);
 	Paint_SetScale(16);
@@ -535,7 +531,7 @@ OLED_while(bmedata s) {
 	
 	float air_quality_score = hum_score + gas_score;
 	//Combine results for the final IAQ index value (0-100% where 100% is good quality air)
-/*********************************************************************************/	
+
 	//save float data values in char
 	snprintf(temperature, MAX, "%.1f", (s.temperature - 2));
 	snprintf(pressure, MAX, "%.0f", s.pressure);
@@ -559,6 +555,10 @@ OLED_while(bmedata s) {
 			Paint_DrawString_EN(10, 5, "Temperature", &Font12, WHITE, WHITE);
 			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
 			Paint_DrawString_EN(64, 60, temperature, &Font20, WHITE, WHITE);
+			Paint_DrawLine(102, 82, 104, 82, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+			Paint_DrawLine(105, 83, 105, 85, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+			Paint_DrawLine(102, 86, 104, 86, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+			Paint_DrawLine(101, 85, 101, 83, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 			Paint_DrawString_EN(106, 80, temperature_unit, &Font20, WHITE, WHITE);
 			OLED_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);

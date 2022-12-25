@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include "GUI_Paint.h"
 #include "OLED_1in5.h"
+#include "RPI_sysfs_gpio.h"
 
 intVec intData;
 int count = 0;
@@ -82,7 +83,6 @@ int GPIO_edge(int pin, char* edge){
     //     printf("\nfailed to open direction\n");
     //     return -3;
     // }
-
     bytes_written = snprintf(buffer, BUFFER_MAX, "%d", *edge);
     write(fd ,buffer, bytes_written);
     close(fd);
@@ -172,14 +172,17 @@ eventHandler button_pressed(){
         count = first_count;
         do_once = 0;
     }
+    return 1;
+}
+
+void onoff_button_pressed(){
+    count = 5;
 }
 /******************************************************************************
 function:	global variable sharing functions that are mainly used in OLED_1in5_test.c
 Info:
 ******************************************************************************/
-void onoff_button_pressed(){
-    count = 5;
-}
+
 
 int get_count() {
     return count;

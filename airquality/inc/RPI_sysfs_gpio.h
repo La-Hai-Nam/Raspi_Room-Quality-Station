@@ -76,6 +76,7 @@
 int SYSFS_GPIO_Export(int Pin);
 int SYSFS_GPIO_Unexport(int Pin);
 int SYSFS_GPIO_Direction(int Pin, int Dir);
+int SYSFS_GPIO_Edge(int pin, char* edge);
 int SYSFS_GPIO_Read(int Pin);
 int SYSFS_GPIO_Write(int Pin, int value);
 
