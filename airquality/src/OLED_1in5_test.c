@@ -35,6 +35,9 @@
 #include "bme_test.h"
 #include <math.h>
 
+int first_time;
+int second_time;
+
 /******************************************************************************
 function:	paint temperature thermometer
 Info:
@@ -413,6 +416,21 @@ void Paint_Cloud(){
 	
 }
 /******************************************************************************
+function:	screensaver that turns off display after 10 min of same state 
+Info:
+******************************************************************************/
+screensaver(){
+	if(get_do_once() == 0){
+		first_time = (int)time(NULL);
+		increment_do_once();
+	}
+	second_time = (int)time(NULL);
+	if((second_time - first_time) >= 600){
+		change_count(6);
+	}
+
+}
+/******************************************************************************
 function:	Initialize Display, Black image and interrupt button on GPIO5 for push button:
 Info:
 ******************************************************************************/
@@ -442,7 +460,7 @@ int OLED_1in5_test(void)
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
-	attach_GPIO(BUTTON, IN, FALLING, button_pressed());
+	attach_GPIO(BUTTON_DATA, BUTTON_ONOFF, IN, FALLING);
 	
 }
 
@@ -471,97 +489,131 @@ OLED_while(bmedata s) {
 	char pressure_unit[MAX] = "hPA";
 	char humidity_unit[MAX] = "%";
 	char gas_resistance_unit[MAX] = "%";
-		UBYTE *BlackImage;
-		UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): 	(OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
-		if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
-			printf("Failed to apply for black memory...\r\n");
-			return -1;
-		}
-		Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);
-		Paint_SetScale(16);
-		Paint_SelectImage(BlackImage);
-		DEV_Delay_ms(500);
-		Paint_Clear(BLACK);
 
-		float current_humidity = s.humidity;
-		if (current_humidity >= 38 && current_humidity <= 42)
-			hum_score = 0.25*100; // Humidity +/-5% around optimum 
+	struct bme680_dev* sensor = (struct bme680_dev*)malloc(sizeof(struct bme680_dev));
+	struct bme680_field_data* data = (struct bme680_field_data*)malloc(sizeof(struct bme680_field_data));
+	
+	UBYTE *BlackImage;
+	UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): 	(OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
+	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
+		printf("Failed to apply for black memory...\r\n");
+		return -1;
+	}
+	Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);
+	Paint_SetScale(16);
+	Paint_SelectImage(BlackImage);
+	DEV_Delay_ms(500);
+	Paint_Clear(BLACK);
+
+	/*************************** IAQ calculation *************************************/
+
+	float current_humidity = s.humidity;
+	if (current_humidity >= 38 && current_humidity <= 42)
+		hum_score = 0.25*100; // Humidity +/-5% around optimum 
+	else
+	{ //sub-optimal
+		if (current_humidity < 38) 
+		hum_score = 0.25/hum_reference*current_humidity*100;
 		else
-		{ //sub-optimal
-			if (current_humidity < 38) 
-			hum_score = 0.25/hum_reference*current_humidity*100;
-			else
-			{
-			hum_score = ((-0.25/(100-hum_reference)*current_humidity)+0.416666)*100;
-			}
+		{
+		hum_score = ((-0.25/(100-hum_reference)*current_humidity)+0.416666)*100;
 		}
-		
-		//Calculate gas contribution to IAQ index
-		float gas_lower_limit = 5000;   // Bad air quality limit
-		float gas_upper_limit = 50000;  // Good air quality limit 
-		float gas_ref;
-		if (s.gas_resistance > gas_upper_limit) {
-			gas_ref = gas_upper_limit;
-		}else if(s.gas_resistance < gas_lower_limit){
-			 gas_ref = gas_lower_limit;
-		}else{
-			gas_ref = s.gas_resistance;
-		}
-		gas_score = (0.75/(gas_upper_limit-gas_lower_limit)*gas_ref -(gas_lower_limit*(0.75/(gas_upper_limit-gas_lower_limit))))*100;
-		
-		float air_quality_score = hum_score + gas_score;
-		//Combine results for the final IAQ index value (0-100% where 100% is good quality air)
+	}
+	
+	//Calculate gas contribution to IAQ index
+	float gas_lower_limit = 5000;   // Bad air quality limit
+	float gas_upper_limit = 50000;  // Good air quality limit 
+	float gas_ref;
+	if (s.gas_resistance > gas_upper_limit) {
+		gas_ref = gas_upper_limit;
+	}else if(s.gas_resistance < gas_lower_limit){
+			gas_ref = gas_lower_limit;
+	}else{
+		gas_ref = s.gas_resistance;
+	}
+	gas_score = (0.75/(gas_upper_limit-gas_lower_limit)*gas_ref -(gas_lower_limit*(0.75/(gas_upper_limit-gas_lower_limit))))*100;
+	
+	float air_quality_score = hum_score + gas_score;
+	//Combine results for the final IAQ index value (0-100% where 100% is good quality air)
+/*********************************************************************************/	
+	//save float data values in char
+	snprintf(temperature, MAX, "%.1f", (s.temperature - 2));
+	snprintf(pressure, MAX, "%.0f", s.pressure);
+	snprintf(humidity, MAX, "%.1f", s.humidity);
+	snprintf(gas_resistance, MAX, "%.1f",air_quality_score);
 
-		snprintf(temperature, MAX, "%.1f", (s.temperature - 2));
-		snprintf(pressure, MAX, "%.0f", s.pressure);
-		snprintf(humidity, MAX, "%.1f", s.humidity);
-		snprintf(gas_resistance, MAX, "%.1f",air_quality_score);
-
-		switch (get_count()) {
-			case 1:
-				printf("temperature: %s\r\n", temperature);	
-				Paint_thermo();
-				Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);		
-				Paint_DrawString_EN(10, 5, "Temperature", &Font12, WHITE, WHITE);
-				Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-				Paint_DrawString_EN(64, 60, temperature, &Font20, WHITE, WHITE);
-				Paint_DrawString_EN(106, 80, temperature_unit, &Font20, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(100);				
-				break;
-			case 2:
-				printf("humidity: %s\r\n", humidity);	
-				Paint_droplet();
-				Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);		
-				Paint_DrawString_EN(10, 5, "Humidity", &Font12, WHITE, WHITE);
-				Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-				Paint_DrawString_EN(64, 60, humidity, &Font20, WHITE, WHITE);
-				Paint_DrawString_EN(106, 80, humidity_unit, &Font20, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(100);				
-				break;
-			case 3:
-				printf("pressure: %s\r\n", pressure);
-				Paint_barometer();		
-				Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);	
-				Paint_DrawString_EN(10, 5, "Pressure", &Font12, WHITE, WHITE);
-				Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-				Paint_DrawString_EN(64, 60, pressure, &Font20, WHITE, WHITE);
-				Paint_DrawString_EN(80, 80, pressure_unit, &Font20, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(100);				
-				break;
-			case 4:
-				printf("airquality: %s \r\n",gas_resistance);
-				Paint_Cloud();
-				Paint_DrawString_EN(18, 65, "AirQ", &Font12, WHITE, WHITE);
-				Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);			
-				Paint_DrawString_EN(10, 5, "Air Quality", &Font12, WHITE, WHITE);
-				Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-				Paint_DrawString_EN(64, 60, gas_resistance, &Font20, WHITE, WHITE);
-				Paint_DrawString_EN(106, 80, gas_resistance_unit, &Font20, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
-				DEV_Delay_ms(100);			
-				break;
-		}
+/*************************** different states of display **********************/	
+	switch (get_count()) {	
+		case 0:
+			Paint_DrawString_EN(22, 5, "Air Quality", &Font12, WHITE, WHITE);
+			Paint_DrawString_EN(37, 25, "Station", &Font12, WHITE, WHITE);
+			Paint_DrawString_EN(25, 64, "Welcome", &Font16, WHITE, WHITE);
+			OLED_1in5_Display(BlackImage);
+			DEV_Delay_ms(2000);
+			Paint_Clear(BLACK);
+			increment_count();
+		case 1:
+			printf("temperature: %s\r\n", temperature);	
+			Paint_thermo();
+			Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);		
+			Paint_DrawString_EN(10, 5, "Temperature", &Font12, WHITE, WHITE);
+			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+			Paint_DrawString_EN(64, 60, temperature, &Font20, WHITE, WHITE);
+			Paint_DrawString_EN(106, 80, temperature_unit, &Font20, WHITE, WHITE);
+			OLED_1in5_Display(BlackImage);
+			DEV_Delay_ms(100);
+			screensaver();				
+			break;
+		case 2:
+			printf("humidity: %s\r\n", humidity);	
+			Paint_droplet();
+			Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);		
+			Paint_DrawString_EN(10, 5, "Humidity", &Font12, WHITE, WHITE);
+			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+			Paint_DrawString_EN(64, 60, humidity, &Font20, WHITE, WHITE);
+			Paint_DrawString_EN(106, 80, humidity_unit, &Font20, WHITE, WHITE);
+			OLED_1in5_Display(BlackImage);
+			DEV_Delay_ms(100);	
+			screensaver();			
+			break;
+		case 3:
+			printf("pressure: %s\r\n", pressure);
+			Paint_barometer();		
+			Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);	
+			Paint_DrawString_EN(10, 5, "Pressure", &Font12, WHITE, WHITE);
+			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+			Paint_DrawString_EN(64, 60, pressure, &Font20, WHITE, WHITE);
+			Paint_DrawString_EN(80, 80, pressure_unit, &Font20, WHITE, WHITE);
+			OLED_1in5_Display(BlackImage);
+			DEV_Delay_ms(100);	
+			screensaver();		
+			break;
+		case 4:
+			printf("airquality: %s \r\n",gas_resistance);
+			Paint_Cloud();
+			Paint_DrawString_EN(18, 65, "AirQ", &Font12, WHITE, WHITE);
+			Paint_DrawLine(0, 2, 128, 2, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);			
+			Paint_DrawString_EN(10, 5, "Air Quality", &Font12, WHITE, WHITE);
+			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+			Paint_DrawString_EN(64, 60, gas_resistance, &Font20, WHITE, WHITE);
+			Paint_DrawString_EN(106, 80, gas_resistance_unit, &Font20, WHITE, WHITE);
+			OLED_1in5_Display(BlackImage);
+			DEV_Delay_ms(100);		
+			screensaver();	
+			break;
+		case 5:
+			Paint_DrawString_EN(25, 5, "Shutting Down", &Font16, WHITE, WHITE);
+			OLED_1in5_Display(BlackImage);
+			DEV_Delay_ms(2000);
+			Paint_Clear(BLACK);
+			OLED_1in5_Clear();
+			DEV_ModuleExit();
+			sensor_disable(sensor, data);
+			system("sudo shutdown -r now");
+			break;
+		case 6:
+		Paint_Clear(BLACK);
+		OLED_1in5_Display(BlackImage);
+		break;
+	}
 	}

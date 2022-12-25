@@ -7,6 +7,7 @@
 #include "bme680_defs.h"
 #include "bme_test.h"
 
+
 void  Handler(int signo)
 {
     //System Exit
@@ -21,11 +22,11 @@ void  Handler(int signo)
 
 int main(int argc, char *argv[])
 {
-    // Exception handling:ctrl + c
-    signal(SIGINT, Handler);
 
     struct bme680_dev* sensor = (struct bme680_dev*)malloc(sizeof(struct bme680_dev));
     struct bme680_field_data* data = (struct bme680_field_data*)malloc(sizeof(struct bme680_field_data));
+    // Exception handling:ctrl + c
+    signal(SIGINT, Handler);
 
     OLED_1in5_test();
     bme_init(sensor);
@@ -35,10 +36,10 @@ int main(int argc, char *argv[])
         
     }
 
-	Paint_Clear(BLACK);
-    OLED_1in5_Clear();
-    DEV_ModuleExit();
-    sensor_disable(sensor, data);
+	// Paint_Clear(BLACK);
+    // OLED_1in5_Clear();
+    // DEV_ModuleExit();
+    // sensor_disable(sensor, data);
 	return 0;
 	
 }

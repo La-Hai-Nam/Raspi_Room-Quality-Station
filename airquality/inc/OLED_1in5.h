@@ -33,6 +33,7 @@
 
 #include "DEV_Config.h"
 #include "bme_test.h"
+#include "bme680_defs.h"
 
 /********************************************************************************
 function:	
@@ -49,6 +50,7 @@ void OLED_1in5_Clear(void);
 void OLED_1in5_Display(UBYTE *Image);
 void OLED_while(bmedata s);
 int OLED_1in5_test(void);
+
 
 #endif  
 	 

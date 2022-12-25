@@ -14,7 +14,8 @@
 #define RISING "rising"
 #define BOTH "both"
 
-#define BUTTON 5
+#define BUTTON_DATA 5
+#define BUTTON_ONOFF 6
 #define GPIO25 25
 #define GPIO27 27
 
@@ -32,16 +33,23 @@ typedef struct {
 } intVec;
 
 
-int attach_GPIO(int gpio, char* direction, char *edge, eventHandler func);
+int attach_GPIO(int gpio_button, int gpio_onoff, char* direction, char *edge);
 void *wait_interrupt(void *arg);
 eventHandler button_pressed();
 eventHandler end_button_pressed();
 
-int BUTTON_export(int pin);
-int BUTTON_unexport(int pin);
-int BUTTON_direction(int pin, char* direction);
-int BUTTON_edge(int pin, char* edge);
-int BUTTON_read(int pin);
+int GPIO_export(int pin);
+int GPIO_unexport(int pin);
+int GPIO_direction(int pin, char* direction);
+int GPIO_edge(int pin, char* edge);
+int GPIO_read(int pin);
 int get_count();
+void increment_count();
+void onoff_button_pressed();
+int get_count();
+void change_count(int num);
+void increment_count();
+int get_do_once();
+void increment_do_once();
 
 #endif

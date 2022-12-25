@@ -11,13 +11,15 @@
 
 intVec intData;
 int count = 0;
+int first_count = 1;
+int do_once = 0;
 
 /******************************************************************************
 function:	ALL sysfs functions to use GPIO_Pins 
 Info:
 ******************************************************************************/
 
-int BUTTON_export(int pin){
+int GPIO_export(int pin){
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
     int fd;
@@ -34,7 +36,7 @@ int BUTTON_export(int pin){
     return 0;
 }
 
-int BUTTON_unexport(int pin){
+int GPIO_unexport(int pin){
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
     int fd;
@@ -51,7 +53,7 @@ int BUTTON_unexport(int pin){
     return 0;
 }
 
-int BUTTON_direction(int pin, char* direction){
+int GPIO_direction(int pin, char* direction){
     char path[DIRECTION_MAX];
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
@@ -69,7 +71,7 @@ int BUTTON_direction(int pin, char* direction){
     return 0;
 }
 
-int BUTTON_edge(int pin, char* edge){
+int GPIO_edge(int pin, char* edge){
     char path[DIRECTION_MAX];
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
@@ -87,7 +89,7 @@ int BUTTON_edge(int pin, char* edge){
     return 0;
 }
 
-int BUTTON_read(int pin){
+int GPIO_read(int pin){
 
 	char path[VALUE_MAX];
 	char value_str[3];
@@ -115,11 +117,15 @@ function:	Attach GPIO Pin to thread which runs simultanously to the code
 Info:
 ******************************************************************************/
 
-int attach_GPIO(int gpio,char* direction, char *edge, eventHandler func) {
-    BUTTON_export(gpio);
-    //BUTTON_direction(gpio, direction);
-    BUTTON_edge(gpio, edge);
-    BUTTON_read(gpio);
+int attach_GPIO(int gpio_button, int gpio_onoff, char* direction, char *edge) {
+    GPIO_export(gpio_button);
+    GPIO_edge(gpio_button, edge);
+    GPIO_read(gpio_button);
+
+    GPIO_export(gpio_onoff);
+    GPIO_edge(gpio_onoff, edge);
+    GPIO_read(gpio_onoff);
+
     pthread_t intThread;
     if (pthread_create(&intThread, NULL, wait_interrupt, (void*) &intData)) {
         fprintf(stderr, "Error creating thread\n");
@@ -134,29 +140,63 @@ Info:
 void *wait_interrupt(void *arg) {
     
     while(1){
-        if(BUTTON_read(BUTTON) == 1){
+        if(GPIO_read(BUTTON_DATA) == 1){
             DEV_Delay_ms(15);
-            if(BUTTON_read(BUTTON) == 0){
+            if(GPIO_read(BUTTON_DATA) == 0){
                 button_pressed();
             }
         }
+
+        if(GPIO_read(BUTTON_ONOFF) == 1){
+            DEV_Delay_ms(15);
+            if(GPIO_read(BUTTON_ONOFF) == 0){
+                onoff_button_pressed();
+            }
+        } 
     }
 }
-
+/******************************************************************************
+function:	adjusts the variable count to display different states on the display
+Info:
+******************************************************************************/
 eventHandler button_pressed(){
-	if(count > 3){
+	if(count == 4 ){
+        first_count = 1;
 		count = 1;
-	}else{
+        do_once = 0;
+	}else if(count >= 0 && count <=3){
+        first_count++;
 		count++;
-	}
-	return 0;
+        do_once = 0;
+	}else{
+        count = first_count;
+        do_once = 0;
+    }
 }
-
-eventHandler end_button_pressed(){
-	OLED_1in5_Clear();
-    return 0;
+/******************************************************************************
+function:	global variable sharing functions that are mainly used in OLED_1in5_test.c
+Info:
+******************************************************************************/
+void onoff_button_pressed(){
+    count = 5;
 }
 
 int get_count() {
     return count;
+}
+
+void change_count(int num) {
+    count = num;
+}
+
+void increment_count(){
+    count++;
+}
+
+int get_do_once(){
+    return do_once;
+}
+
+void increment_do_once(){
+    do_once++;
 }

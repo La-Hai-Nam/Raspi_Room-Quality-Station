@@ -1,12 +1,14 @@
 #ifndef _BME_TEST_H_
 #define _BME_TEST_H_
 
+
 struct value{
     double temperature;
 	double pressure;
 	double humidity;
 	double gas_resistance;
 };
+
 
 typedef struct value bmedata;
 
