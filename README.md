@@ -42,5 +42,5 @@ To have an overview about the whole project it is recommended to read the [plann
 
 
 ## Roadmap
-... in work ... 
+Click to see a roadmap of the whole project: [Link](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/main/Documentation/Roadmap.png)
 
