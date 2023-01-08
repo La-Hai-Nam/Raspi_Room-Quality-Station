@@ -1,0 +1,10 @@
+cmake-build-debug/**
+*.obj
+*.check_cache
+*.txt
+*.bin
+*.cmake
+*.ninja_log
+*.ninja_deps
+*.json
+.idea/**
