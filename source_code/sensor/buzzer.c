@@ -3,6 +3,12 @@
 #include "gpio.h"
 
 
+//Thresholds
+//Values have to be defined!! The following are just examples
+const int thmax_temp = 6, thmax_air_quality = 4, thmax_humidity = 5;                  //Maximum thresholds
+const int thmin_temp = 2, thmin_air_quality = 1, thmin_humidity = 1;                  //Minimum thresholds
+
+
 //Variables for functions
 int buzzer_pin = 16;
 
@@ -33,12 +39,13 @@ void buzzer_toggle(){
     }
 }
 
-void buzzer_alarm_set(int measure_values[3], int thresholds_max[3], int thresholds_min[3]){
-    for(int i=0; i<3; i++){
-        if(measure_values[i]>thresholds_max || measure_values[i]<thresholds_min){
-            buzzer_on();
-        }else{
-            buzzer_off();
-        }
+void set_buzzer_alarm(struct bme680_field_data* data){
+    if( (data->temperature/100.0f)>thmax_temp ||  (data->gas_resistance/100.0f)>thmax_air_quality || (data->humidity/100.0f)>thmin_humidity ){
+        buzzer_on();
+    }else if( (data->temperature/100.0f)<thmin_temp ||  (data->gas_resistance/100.0f)<thmin_air_quality || (data->humidity/100.0f)<thmin_humidity ){
+        buzzer_on();
+    }else{
+        buzzer_off();
     }
 }
+
