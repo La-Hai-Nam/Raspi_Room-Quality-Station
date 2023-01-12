@@ -39,6 +39,7 @@ To have an overview about the whole project it is recommended to read the [plann
 - Measurement values removed after M1 presentation: CO2-level; The cause was that CO2-sensors are too expensive and not needed (because of air quality is added)
 - Improved the tracibility table after M1 presentation
 - Changes in the hardware concept after M1 presentation based on the adding and removing measurement values changes
+- Changed the connection between the Raspberry Pi and the display from I²C to SPI after M1 presentation; The cause was that the display needs some hardware changes to run over I²C, that changes are very impractical
 
 
 ## Roadmap
