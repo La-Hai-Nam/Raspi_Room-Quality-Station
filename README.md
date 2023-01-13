@@ -1,5 +1,20 @@
 # Project Room-Quality-Station / 2022WS_team4
 
+## Preparation checklist table for the M2 presentation
+
+|No.| Content                                        | Sub-content                                                                                                                                                   | Assigned to                             | Time       |
+|---|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|------------|
+| 1 |  <ul><li>[ ] Eröffnung </li></ul>              | <ul><li>[ ] Projekt, introduction, structure </li><li>[ ] Roadmap </li><li>[ ] readme.me </li><li>[ ] Changes after M1 </li></ul>                             | Andreas (complete)                      | x min      |
+| 2 |  <ul><li>[ ] Current working status </li></ul> | <ul><li>[ ] Progress </li><li>[ ] Problems and solutions (disease, hardware, software) </li><li>[ ] Risks </li></ul>                                          | Andreas<br/>Andreas+Max+Nam<br/>Andreas         | x min      |
+| 3 |  <ul><li>[ ] Hardware </li></ul>               | <ul><li>[ ] Component list </li><li>[ ] Operating concept </li><li>[ ] Schematics </li></ul>                                                                  | Andreas<br/>Nam<br/>Nam+Andreas         | x min      |
+| 4 |  <ul><li>[ ] Software </li></ul>               | <ul><li>[ ] Introduction </li><li>[ ] Sensor </li><li>[ ] Display intro </li><li>[ ] Display+Button </li><li>[ ] Buzzer </li><li>[ ] Kernel Module </li></ul> | Nam<br/>Max<br/>Andreas<br/>Max<br/>Max | x min      |
+| 5 |  <ul><li>[ ] Test cases </li></ul>             | <ul><li>[ ] T001+T002 </li><li>[ ] T003+T004 </li><li>[ ] T005+T006 </li></ul>                                                                                | Max<br/>Nam<br/>Nam<br/>Andreas<br/>Max | x min      |
+| 6 |  <ul><li>[ ] Demonstration </li></ul>          | <ul><li>[ ] Organization+Explanation </li><li>[ ] Demonstration </li><li>[ ] Dismantling+Conclusion</li></ul>                                                 | Andreas+Max<br/>Nam<br/>Andreas+Nam     | x min      |
+| 7 |  <ul><li>[ ] M3 view </li></ul>                | <ul><li>[ ] Continue test&improve</li><li>[ ] Poster </li><li>[ ] User Manual </li></ul>                                                                      | Andreas+Max+Nam<br/>Nam<br/>Andreas     | x min      |
+| 8 |  <ul><li>[ ] Merge all to one </li></ul>       |                                                                           	      									     | Andreas                                 | x min      |
+
+<br/>	
+
 ## Purpose
 This project shall fullfill the [planning phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Planning), the [concept phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Concept), the [design phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Design), the [implementation phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Implementation), the [testing phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Test) and the [finalization phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Finalization) of developing and building a device called Room-Quality-Station. 
 
