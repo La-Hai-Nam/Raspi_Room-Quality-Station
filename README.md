@@ -11,7 +11,7 @@
 | 5 |  <ul><li>[ ] Test cases </li></ul>             | <ul><li>[ ] T001+T002 </li><li>[ ] T003+T004 </li><li>[ ] T005+T006 </li></ul>                                                                                | Max<br/>Nam<br/>Andreas                 | x min      |
 | 6 |  <ul><li>[ ] Demonstration </li></ul>          | <ul><li>[ ] Organization+Explanation </li><li>[ ] Demonstration </li><li>[ ] Dismantling+Conclusion</li></ul>                                                 | Andreas+Max<br/>Nam<br/>Andreas+Nam     | x min      |
 | 7 |  <ul><li>[ ] M3 view </li></ul>                | <ul><li>[ ] Continue test&improve</li><li>[ ] Poster </li><li>[ ] User Manual </li></ul>                                                                      | Andreas+Max+Nam<br/>Nam<br/>Andreas     | x min      |
-| 8 |  <ul><li>[ ] Merge all to one </li></ul>       |                                                                           	      									     | Andreas                                 | x min      |
+| 8 |  <ul><li>[ ] Merge all to one </li></ul>       |                                                                           	      									     | Andreas                                 | -      |
 	
 
 ## Purpose
