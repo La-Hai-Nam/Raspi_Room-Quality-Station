@@ -2,15 +2,17 @@
 
 ## Preparation checklist table for the M2 presentation
 
-|No.| Content                                        | Sub-content                                                                                                                                                   | Assigned to                             | Time       |
-|---|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|------------|
-| 1 |  <ul><li>[ ] Eröffnung </li></ul>              | <ul><li>[ ] Projekt, introduction, structure </li><li>[ ] Roadmap </li><li>[ ] Changes after M1 </li></ul>                             | Andreas (complete)                      | x min      |
-| 2 |  <ul><li>[ ] Current working status </li></ul> | <ul><li>[ ] Progress </li><li>[ ] Problems and solutions (disease, hardware, software) </li><li>[ ] Risks </li></ul>                                          | Andreas<br/>Andreas<br/>Andreas | x min      |
-| 3 |  <ul><li>[ ] Hardware </li></ul>               | <ul><li>[ ] Component list </li><li>[ ] Operating concept </li><li>[ ] Schematics </li></ul>                                                                  | Andreas<br/>Nam<br/>Andreas         | x min      |
-| 4 |  <ul><li>[ ] Software </li></ul>               | <ul><li>[ ] Display </li><li>[ ] Button polling </li><li>[ ] Buzzer </li><li>[ ] Sensor </li><li>[ ] GPIO Interrupt </li></ul> | Nam<br/>Nam<br/>Andreas<br/>Max<br/>Max | x min      |
-| 5 |  <ul><li>[ ] Test cases </li></ul>             | <ul><li>[ ] T001+T002 </li><li>[ ] T003+T004 </li><li>[ ] T005+T006 </li></ul>                                                                                | Max<br/>Nam<br/>Andreas                 | x min      |
-| 6 |  <ul><li>[ ] Demonstration </li></ul>          | <ul><li>[ ] Organization+Explanation </li><li>[ ] Demonstration </li><li>[ ] Dismantling+Conclusion</li></ul>                                                 | Andreas+Max<br/>Nam<br/>Andreas+Nam     | x min      |
-| 7 |  <ul><li>[ ] M3 view </li></ul>                | M3 view                                                                      | Nam     | x min      |
+|No.	| Content                                     		| Sub-content                                                                                                            		| Assigned to                             	| Time					|
+|-------|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|---------------------------------------|
+| 1 	|  <ul><li>[ ] Eröffnung </li></ul>              	| <ul><li>[ ] Projekt, introduction, structure </li><li>[ ] Roadmap </li><li>[ ] Changes after M1 </li></ul>               		| Andreas (complete)                      	| x min      				|
+| 2 	|  <ul><li>[ ] Current working status </li></ul>	| <ul><li>[ ] Progress </li><li>[ ] Problems and solutions (disease, hardware, software) </li><li>[ ] Risks </li></ul>            	| Andreas (complete) 		      		| x min      	     			|
+| 3 	|  <ul><li>[ ] Hardware </li></ul>               	| <ul><li>[ ] Component list </li><li>[ ] Operating concept </li><li>[ ] Schematics </li></ul>                                    	| Andreas<br/>Nam<br/>Andreas             	| x min      				|
+| 4 	|  <ul><li>[ ] Software </li></ul>               	| <ul><li>[ ] Display </li><li>[ ] Button polling </li><li>[ ] Buzzer </li><li>[ ] Sensor </li><li>[ ] GPIO Interrupt </li></ul> 	| Nam<br/>Nam<br/>Andreas<br/>Max<br/>Max 	| x min      				|
+| 5 	|  <ul><li>[ ] Test cases </li></ul>             	| <ul><li>[ ] T001+T002 </li><li>[ ] T003+T004 </li><li>[ ] T005+T006 </li></ul>                                                 	| Max<br/>Nam<br/>Andreas                 	| x min      				|
+| 6 	|  <ul><li>[ ] Demonstration </li></ul>          	| <ul><li>[ ] Organization+Explanation </li><li>[ ] Demonstration </li><li>[ ] Dismantling+Conclusion</li></ul>                      	| Andreas+Max<br/>Nam<br/>Andreas+Nam     	| 2:30 min<br/>10 min<br/>2:30 min	|
+| 7 	|  <ul><li>[ ] M3 view </li></ul>                	| M3 view                                                                      								| Nam     					| x min      				|
+| 8 	|  <ul><li>[ ] Q&A					| Q&A                                                                     								| All     					| 10 min      				|
+                                                               | Nam     | x min      |
 
 
 ## Purpose
