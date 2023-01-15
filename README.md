@@ -12,7 +12,6 @@
 | 6 	|  <ul><li>[ ] Demonstration </li></ul>          	| <ul><li>[ ] Organization+Explanation </li><li>[ ] Demonstration </li><li>[ ] Dismantling+Conclusion</li></ul>                      	| Andreas+Max<br/>Nam<br/>Andreas+Nam     	| 2:30 min<br/>10 min<br/>2:30 min	|
 | 7 	|  <ul><li>[ ] M3 view </li></ul>                	| M3 view                                                                      								| Nam     					| x min      				|
 | 8 	|  <ul><li>[ ] Q&A					| Q&A                                                                     								| All     					| 10 min      				|
-                                                               | Nam     | x min      |
 
 
 ## Purpose
