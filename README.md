@@ -2,9 +2,10 @@
 
 ## Preparation checklist table for the M2 presentation
 
+
 |No.	| Content                                     		| Sub-content                                                                                                            		| Assigned to                             	| Time					|
 |-------|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|---------------------------------------|
-| 1 	|  <ul><li>[ ] Eröffnung </li></ul>              	| <ul><li>[ ] Projekt, introduction, structure </li><li>[ ] Roadmap </li><li>[ ] Changes after M1 </li></ul>               		| Andreas (complete)                      	| x min      				|
+| 1 	|  <ul><li>[ ] Opening </li></ul>              	| <ul><li>[ ] Projekt, introduction, structure </li><li>[ ] Roadmap </li><li>[ ] Changes after M1 </li></ul>               		| Andreas (complete)                      	| x min      				|
 | 2 	|  <ul><li>[ ] Current working status </li></ul>	| <ul><li>[ ] Progress </li><li>[ ] Problems and solutions (disease, hardware, software) </li><li>[ ] Risks </li></ul>            	| Andreas (complete) 		      		| x min      	     			|
 | 3 	|  <ul><li>[ ] Hardware </li></ul>               	| <ul><li>[ ] Component list </li><li>[ ] Operating concept </li><li>[ ] Schematics </li></ul>                                    	| Andreas<br/>Nam<br/>Andreas             	| x min      				|
 | 4 	|  <ul><li>[ ] Software </li></ul>               	| <ul><li>[ ] Display </li><li>[ ] Button polling </li><li>[ ] Buzzer </li><li>[ ] Sensor </li><li>[ ] GPIO Interrupt </li></ul> 	| Nam<br/>Nam<br/>Andreas<br/>Max<br/>Max 	| x min      				|
