@@ -20,7 +20,7 @@
 #define GPIO27 27
 
 #define BUFFER_MAX 3
-#define DIRECTION_MAX 35
+#define DIRECTION_MAX 100
 #define VALUE_MAX 30
 
 

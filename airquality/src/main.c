@@ -6,6 +6,8 @@
 #include "sensor.h"
 #include "bme680_defs.h"
 #include "bme_test.h"
+#include "interrupt.h"
+#include "buzzer.h"
 
 
 void  Handler(int signo)
@@ -15,6 +17,8 @@ void  Handler(int signo)
     Paint_Clear(BLACK);
     OLED_1in5_Clear();
     DEV_ModuleExit();
+	buzzer_off();
+	buzzer_end();
     exit(0);
 }
 
@@ -30,8 +34,10 @@ int main(int argc, char *argv[])
 
     OLED_1in5_test();
     bme_init(sensor);
+	open_procfile();
 
     while (1){
+		sleep(1);
         OLED_while(bme_while(sensor, data));
         
     }

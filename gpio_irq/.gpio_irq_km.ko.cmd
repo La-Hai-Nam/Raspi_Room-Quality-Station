@@ -1,0 +1,1 @@
+cmd_/home/teamd/Documents/gpio_irq/gpio_irq_km.ko := ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/teamd/Documents/gpio_irq/gpio_irq_km.ko /home/teamd/Documents/gpio_irq/gpio_irq_km.o /home/teamd/Documents/gpio_irq/gpio_irq_km.mod.o;  true

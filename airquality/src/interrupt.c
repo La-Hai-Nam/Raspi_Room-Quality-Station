@@ -9,12 +9,13 @@
 #include "GUI_Paint.h"
 #include "OLED_1in5.h"
 #include "RPI_sysfs_gpio.h"
+#include <errno.h>
 
 intVec intData;
 int count = 0;
 int first_count = 1;
 int do_once = 0;
-
+int procfile_fd;
 /******************************************************************************
 function:	ALL sysfs functions to use GPIO_Pins 
 Info:
@@ -56,18 +57,20 @@ int GPIO_unexport(int pin){
 
 int GPIO_direction(int pin, char* direction){
     char path[DIRECTION_MAX];
-    char buffer[BUFFER_MAX];
+    //char buffer[BUFFER_MAX];
     ssize_t bytes_written;
+
     int fd;
-    snprintf(path, DIRECTION_MAX, "sys/class/gpio/gpio%d/direction", pin);
+    snprintf(path, DIRECTION_MAX, "/sys/class/gpio/gpio%d/direction", pin);
+
     fd = open(path, O_WRONLY);
-    if(fd == -1){
+    if(fd < 0){
         printf("\nfailed to open direction\n");
         return -3;
     }
 
-    bytes_written = snprintf(buffer, BUFFER_MAX, "%d", *direction);
-    write(fd ,buffer, bytes_written);
+    //bytes_written = snprintf(buffer, BUFFER_MAX, "%d", *direction);
+    write(fd ,direction, sizeof(direction));
     close(fd);
     return 0;
 }
@@ -110,6 +113,27 @@ int GPIO_read(int pin){
 	close(fd);
 
 	return(atoi(value_str));
+}
+
+int GPIO_value(int pin, int value){
+
+    char path[DIRECTION_MAX];
+    char buffer[BUFFER_MAX];
+    ssize_t bytes_written;
+    int fd;
+
+    snprintf(path, DIRECTION_MAX, "/sys/class/gpio/gpio%d/value", pin);
+    fd = open(path, O_WRONLY);
+
+    if(fd == -1){
+        printf("\nfailed to open value\n");
+        return -3;
+    }
+
+    bytes_written = snprintf(buffer, BUFFER_MAX, "%d", value);
+    write(fd ,buffer, bytes_written);
+    close(fd);
+    return 0;
 }
 
 /******************************************************************************
@@ -183,13 +207,37 @@ function:	global variable sharing functions that are mainly used in OLED_1in5_te
 Info:
 ******************************************************************************/
 
+void open_procfile() {
+	procfile_fd = open("/proc/mydev", O_RDWR | O_NONBLOCK);
+	if(procfile_fd < 0) {
+		printf("in interrupt.c open_procfile() error opening proc file\n");
+	}	
+}
+
 
 int get_count() {
-    return count;
+	
+	char buffer[100];
+	lseek(procfile_fd, 0, SEEK_SET);
+	int bytes_read = read(procfile_fd, buffer, 5);
+
+	printf("%s:  %d: \n", buffer, bytes_read);
+
+	return atoi(buffer);
 }
 
 void change_count(int num) {
-    count = num;
+    //count = num;
+
+	char buffer[100];
+	int len = sprintf(buffer, "%d", num);
+	
+	lseek(procfile_fd, 0, SEEK_SET);
+	if(write(procfile_fd, buffer, len) != len) {
+		printf("in interrupt.c change_count() error writing to proc file\n");
+	}
+	
+	printf("count changed\n");
 }
 
 void increment_count(){

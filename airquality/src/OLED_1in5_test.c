@@ -33,6 +33,7 @@
 #include "OLED_1in5.h"
 #include "interrupt.h"
 #include "bme_test.h"
+#include "buzzer.h"
 #include <math.h>
 
 int first_time;
@@ -462,7 +463,8 @@ void OLED_1in5_test(void)
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
 	//interrupt function
-	attach_GPIO(BUTTON_DATA, BUTTON_ONOFF, IN, FALLING);
+	//attach_GPIO(BUTTON_DATA, BUTTON_ONOFF, IN, FALLING);
+	buzzer_initialize();
 	
 }
 
@@ -537,6 +539,10 @@ void OLED_while(bmedata s) {
 	snprintf(pressure, MAX, "%.0f", s.pressure);
 	snprintf(humidity, MAX, "%.1f", s.humidity);
 	snprintf(gas_resistance, MAX, "%.1f",air_quality_score);
+	
+	s.gas_resistance = (double)air_quality_score;
+	set_buzzer_alarm(s);
+	
 
 /*************************** different states of display **********************/	
 	switch (get_count()) {	
@@ -547,7 +553,8 @@ void OLED_while(bmedata s) {
 			OLED_1in5_Display(BlackImage);
 			DEV_Delay_ms(2000);
 			Paint_Clear(BLACK);
-			increment_count();
+			//increment_count();
+			change_count(1);
 		case 1:
 			printf("temperature: %s\r\n", temperature);	
 			Paint_thermo();
@@ -562,7 +569,7 @@ void OLED_while(bmedata s) {
 			Paint_DrawString_EN(106, 80, temperature_unit, &Font20, WHITE, WHITE);
 			OLED_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);
-			screensaver();				
+			//screensaver();				
 			break;
 		case 2:
 			printf("humidity: %s\r\n", humidity);	
@@ -574,7 +581,7 @@ void OLED_while(bmedata s) {
 			Paint_DrawString_EN(106, 80, humidity_unit, &Font20, WHITE, WHITE);
 			OLED_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);	
-			screensaver();			
+			//screensaver();			
 			break;
 		case 3:
 			printf("pressure: %s\r\n", pressure);
@@ -586,7 +593,7 @@ void OLED_while(bmedata s) {
 			Paint_DrawString_EN(80, 80, pressure_unit, &Font20, WHITE, WHITE);
 			OLED_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);	
-			screensaver();		
+			//screensaver();		
 			break;
 		case 4:
 			printf("airquality: %s \r\n",gas_resistance);
@@ -599,7 +606,7 @@ void OLED_while(bmedata s) {
 			Paint_DrawString_EN(106, 80, gas_resistance_unit, &Font20, WHITE, WHITE);
 			OLED_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);		
-			screensaver();	
+			//screensaver();	
 			break;
 		case 5:
 			Paint_DrawString_EN(25, 5, "Shutting Down", &Font16, WHITE, WHITE);
@@ -609,11 +616,13 @@ void OLED_while(bmedata s) {
 			OLED_1in5_Clear();
 			DEV_ModuleExit();
 			sensor_disable(sensor, data);
-			system("sudo shutdown -r now");
+			system("sudo shutdown -h now");
+			buzzer_off();
+			buzzer_end();	
 			break;
 		case 6:
 		Paint_Clear(BLACK);
 		OLED_1in5_Display(BlackImage);
 		break;
 	}
-	}
+}

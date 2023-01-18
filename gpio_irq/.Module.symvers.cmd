@@ -1,0 +1,1 @@
+cmd_/home/teamd/Documents/gpio_irq/Module.symvers := sed 's/\.ko$$/\.o/' /home/teamd/Documents/gpio_irq/modules.order | scripts/mod/modpost -m -a  -o /home/teamd/Documents/gpio_irq/Module.symvers -e -i Module.symvers   -T -
