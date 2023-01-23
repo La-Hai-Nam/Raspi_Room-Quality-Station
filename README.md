@@ -12,7 +12,7 @@
 | 4 	|  <ul><li>[ ] Software </li></ul>               	| <ul><li>[x] Display </li><li>[x] Button polling </li><li>[x] Buzzer </li><li>[ ] Sensor </li><li>[ ] GPIO Interrupt </li></ul> 	| Nam<br/>Nam<br/>Andreas<br/>Max<br/>Max 	| x min<br/>x min<br/>0:50 min<br/>x min<br/>x min      				|
 | 5 	|  <ul><li>[x] Test cases </li></ul>             	| <ul><li>[x] T001+T002 </li><li>[x] T003+T004 </li><li>[x] T005+T006 </li></ul>                                                 	| Max<br/>Nam<br/>Andreas                 	| x min<br/>x min<br/>0:50 min     				|
 | 6 	|  Demonstration (Test cases slide is opened)</li></ul>          	| <ul><li> Organization+Explanation </li><li>Demonstration </li><li>Dismantling+Conclusion</li></ul>                      	| Andreas+Max<br/>Nam<br/>Andreas+Nam     	| 2:30 min<br/>10 min<br/>2:30 min	|
-| 7 	|  <ul><li>[ ] M3 view </li></ul>                	| M3 view                                                                      								| Nam     					| x min      				|
+| 7 	|  <ul><li>[x] M3 view </li></ul>                	| M3 view                                                                      								| Nam     					| x min      				|
 | 8 	|  Q&A					| Q&A                                                                     								| All     					| 10 min      				|
 
 
