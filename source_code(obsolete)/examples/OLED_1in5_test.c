@@ -1,7 +1,7 @@
 /*****************************************************************************
-* | File      	:   OLED_1in5_test.c
+* | File      	:   oled_1in5_test.c
 * | Author      :   Waveshare team
-* | Function    :   1.5inch OLED Module test demo
+* | Function    :   1.5inch oled Module test demo
 * | Info        :
 *----------------
 * |	This version:   V2.0
@@ -29,29 +29,29 @@
 #
 ******************************************************************************/
 #include "test.h"
-#include "OLED_1in5.h"
+#include "oled_1in5.h"
 #include "interrupt.h"
 
 
-int OLED_1in5_test(void)
+int oled_1in5_test(void)
 {
-	printf("1.5inch OLED test demo\n");
+	printf("1.5inch oled test demo\n");
 	if(DEV_ModuleInit() != 0) {
 		return -1;
 	}
 	  
-	printf("OLED Init...\r\n");
-	OLED_1in5_Init();
+	printf("oled Init...\r\n");
+	oled_1in5_Init();
 	DEV_Delay_ms(500);	
 	// 0.Create a new image cache
 	UBYTE *BlackImage;
-	UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): (OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
+	UWORD Imagesize = ((oled_1in5_WIDTH%2==0)? (oled_1in5_WIDTH/2): (oled_1in5_WIDTH/2+1)) * oled_1in5_HEIGHT;
 	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
 			printf("Failed to apply for black memory...\r\n");
 			return -1;
 	}
 	printf("Paint_NewImage\r\n");
-	Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);	
+	Paint_NewImage(BlackImage, oled_1in5_WIDTH, oled_1in5_HEIGHT, 0, BLACK);	
 	Paint_SetScale(16);
 	printf("Drawing\r\n");
 	//1.Select Image
@@ -67,28 +67,28 @@ int OLED_1in5_test(void)
 				printf("temp\r\n");		
 				Paint_DrawString_EN(10, 0, "Temperature", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, "Temperature", &Font12, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);	
+				oled_1in5_Display(BlackImage);	
 				DEV_Delay_ms(2000);			
 				break;
 			case 2:
 				printf("humidity\r\n");			
 				Paint_DrawString_EN(10, 0, "Humidity", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, "Humidity", &Font12, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
+				oled_1in5_Display(BlackImage);
 				DEV_Delay_ms(1000);			
 				break;
 			case 3:
 				printf("pressure\r\n");			
 				Paint_DrawString_EN(10, 0, "Pressure", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, "Pressure", &Font12, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
+				oled_1in5_Display(BlackImage);
 				DEV_Delay_ms(1000);			
 				break;
 			case 4:
 				printf("airquality\r\n");			
 				Paint_DrawString_EN(10, 0, "Airquality", &Font12, WHITE, WHITE);
 				Paint_DrawString_EN(64, 56, "Airquality", &Font12, WHITE, WHITE);
-				OLED_1in5_Display(BlackImage);
+				oled_1in5_Display(BlackImage);
 				DEV_Delay_ms(1000);			
 				break;
 		}

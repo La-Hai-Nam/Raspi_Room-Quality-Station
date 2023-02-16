@@ -39,6 +39,6 @@
 #include <stdlib.h> // malloc() free()
 #include <math.h>
 
-void OLED_1in5_test(void);
+void oled_1in5_init(void);
 
 #endif

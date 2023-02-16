@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "GUI_Paint.h"
-#include "OLED_1in5.h"
+#include "oled_1in5.h"
 #include "RPI_sysfs_gpio.h"
 
 intVec intData;
@@ -179,7 +179,7 @@ void onoff_button_pressed(){
     count = 5;
 }
 /******************************************************************************
-function:	global variable sharing functions that are mainly used in OLED_1in5_test.c
+function:	global variable sharing functions that are mainly used in oled_1in5_test.c
 Info:
 ******************************************************************************/
 

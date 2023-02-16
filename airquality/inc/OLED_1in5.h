@@ -1,7 +1,7 @@
 /*****************************************************************************
-* | File      	:   OLED_1in5.h
+* | File      	:   oled_1in5.h
 * | Author      :   Waveshare team
-* | Function    :   1.5inch OLED Module Drive function
+* | Function    :   1.5inch oled Module Drive function
 * | Info        :
 *----------------
 * |	This version:   V2.0
@@ -28,8 +28,8 @@
 # THE SOFTWARE.
 #
 ******************************************************************************/
-#ifndef __OLED_1IN5_H
-#define __OLED_1IN5_H		
+#ifndef __oled_1IN5_H
+#define __oled_1IN5_H		
 
 #include "DEV_Config.h"
 #include "bme_test.h"
@@ -40,16 +40,16 @@ function:
 		Define the full screen height length of the display
 ********************************************************************************/
 
-#define OLED_1in5_WIDTH  128//OLED width
-#define OLED_1in5_HEIGHT 128 //OLED height
+#define oled_1in5_WIDTH  128//oled width
+#define oled_1in5_HEIGHT 128 //oled height
 #define MAX 100
 
 
-void OLED_1in5_Init(void);
-void OLED_1in5_Clear(void);
-void OLED_1in5_Display(UBYTE *Image);
-void OLED_while(bmedata s);
-void OLED_1in5_test(void);
+void oled_1in5_Init(void);
+void oled_1in5_Clear(void);
+void oled_1in5_Display(UBYTE *Image);
+void oled_while(bmedata s);
+void oled_1in5_init(void);
 
 #endif  
 	 

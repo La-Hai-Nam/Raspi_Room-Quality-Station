@@ -2,7 +2,7 @@
 #define _INTERRUPT_H_
 
 #include <pthread.h>
-#include "OLED_1in5.h"
+#include "oled_1in5.h"
 
 #define LOW 0
 #define HIGH 1

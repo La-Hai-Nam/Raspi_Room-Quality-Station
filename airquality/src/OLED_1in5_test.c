@@ -1,7 +1,7 @@
 /*****************************************************************************
-* | File      	:   OLED_1in5_test.c
+* | File      	:   oled_1in5_test.c
 * | Author      :   Waveshare team
-* | Function    :   1.5inch OLED Module test demo
+* | Function    :   1.5inch oled Module test demo
 * | Info        :
 *----------------
 * |	This version:   V2.0
@@ -30,7 +30,7 @@
 ******************************************************************************/
 #include <stdlib.h>
 #include "test.h"
-#include "OLED_1in5.h"
+#include "oled_1in5.h"
 #include "interrupt.h"
 #include "bme_test.h"
 #include <math.h>
@@ -39,9 +39,10 @@ int first_time;
 int second_time;
 
 /******************************************************************************
-function:	paint temperature thermometer
+function:	paint temperature thermometer for temperature
 Info:
 ******************************************************************************/
+
 void Paint_thermo(){
 
 // draw stem/glass/container of liquid 
@@ -123,9 +124,10 @@ void Paint_thermo(){
 }
 
 /******************************************************************************
-function:	paint humidity droplet
+function:	paint humidity droplet for humidity
 Info:
 ******************************************************************************/
+
 void Paint_droplet(){
 	Paint_DrawPoint(32, 38, WHITE, DOT_PIXEL_1X1, DOT_STYLE_DFT);
 	Paint_DrawPoint(32, 39, WHITE, DOT_PIXEL_1X1, DOT_STYLE_DFT);
@@ -212,9 +214,10 @@ void Paint_droplet(){
 }
 
 /******************************************************************************
-function:	paint pressure barometer
+function:	paint pressure barometer for pressure
 Info:
 ******************************************************************************/
+
 void Paint_barometer(){
 // outer area
 	Paint_DrawLine(27, 51, 37, 51, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
@@ -345,6 +348,10 @@ void Paint_barometer(){
 	Paint_DrawLine(34, 77, 34, 81, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 	Paint_DrawLine(35, 78, 35, 80, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 }
+/******************************************************************************
+function:	Paint cloud for air quality
+Info:
+******************************************************************************/
 
 void Paint_Cloud(){
 	Paint_DrawLine(29, 51, 38, 51, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
@@ -435,43 +442,44 @@ function:	Initialize Display, Black image and interrupt button on GPIO5 for push
 Info:
 ******************************************************************************/
 
-void OLED_1in5_test(void)
+void oled_1in5_init(void)
 {
 	//init the display spi and all registers
-	printf("1.5inch OLED test demo\n");
+	printf("1.5inch oled test demo\n");
 	if(DEV_ModuleInit() != 0) {
 		return;
 	}
 	  
-	printf("OLED Init...\r\n");
-	OLED_1in5_Init();
+	printf("oled Init...\r\n");
+	oled_1in5_Init();
 	DEV_Delay_ms(500);	
 	// Create a new image cache which is fully black
 	UBYTE *BlackImage;
-	UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): (OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
+	UWORD Imagesize = ((oled_1in5_WIDTH%2==0)? (oled_1in5_WIDTH/2): (oled_1in5_WIDTH/2+1)) * oled_1in5_HEIGHT;
 	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
 			printf("Failed to apply for black memory...\r\n");
 			return;
 	}
 	printf("Paint_NewImage\r\n");
-	Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);	
+	Paint_NewImage(BlackImage, oled_1in5_WIDTH, oled_1in5_HEIGHT, 0, BLACK);	
 	Paint_SetScale(16);
 	printf("Drawing\r\n");
 	//print black image on display
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
-	//interrupt function
+	//interrupt function which utilizes threads
 	attach_GPIO(BUTTON_DATA, BUTTON_ONOFF, IN, FALLING);
 	
 }
 
 /******************************************************************************
-function:	Get sensor data from bme_test.c and display sensor data on the OLEDdisplay depending on count (if button_pressed() == true){ count++; }:
+function:	Get sensor data from bme_test.c and display sensor data on the oleddisplay depending on count (if button_pressed() == true){ count++; }:
+Parameter: bmedata "s" is a struct containing the sensordata as a double value double temperature, double humidity, double pressure and double gas_resistance
 Info:
 ******************************************************************************/
 
-void OLED_while(bmedata s) {
+void oled_while(bmedata s) {
 			
 	char temperature[MAX];
 	char pressure[MAX];
@@ -490,18 +498,20 @@ void OLED_while(bmedata s) {
 	struct bme680_field_data* data = (struct bme680_field_data*)malloc(sizeof(struct bme680_field_data));
 	
 	UBYTE *BlackImage;
-	UWORD Imagesize = ((OLED_1in5_WIDTH%2==0)? (OLED_1in5_WIDTH/2): 	(OLED_1in5_WIDTH/2+1)) * OLED_1in5_HEIGHT;
+	UWORD Imagesize = ((oled_1in5_WIDTH%2==0)? (oled_1in5_WIDTH/2): 	(oled_1in5_WIDTH/2+1)) * oled_1in5_HEIGHT;
 	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
 		printf("Failed to apply for black memory...\r\n");
 		return;
 	}
-	Paint_NewImage(BlackImage, OLED_1in5_WIDTH, OLED_1in5_HEIGHT, 0, BLACK);
+	Paint_NewImage(BlackImage, oled_1in5_WIDTH, oled_1in5_HEIGHT, 0, BLACK);
 	Paint_SetScale(16);
 	Paint_SelectImage(BlackImage);
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
 
-	/*************************** IAQ calculation *************************************/
+	/*************************** IAQ calculation *************************************
+	Info: calculation of the air quality value depending on gas_resistance and humidity
+	******************************************************************************/
 
 	float current_humidity = s.humidity;
 	if (current_humidity >= 38 && current_humidity <= 42)
@@ -540,14 +550,16 @@ void OLED_while(bmedata s) {
 
 /*************************** different states of display **********************/	
 	switch (get_count()) {	
+		/*start message*/
 		case 0:
 			Paint_DrawString_EN(22, 5, "Air Quality", &Font12, WHITE, WHITE);
 			Paint_DrawString_EN(37, 25, "Station", &Font12, WHITE, WHITE);
 			Paint_DrawString_EN(25, 64, "Welcome", &Font16, WHITE, WHITE);
-			OLED_1in5_Display(BlackImage);
+			oled_1in5_Display(BlackImage);
 			DEV_Delay_ms(2000);
 			Paint_Clear(BLACK);
 			increment_count();
+		/*Draws the thermometer and prints the current temperature value*/
 		case 1:
 			printf("temperature: %s\r\n", temperature);	
 			Paint_thermo();
@@ -560,10 +572,11 @@ void OLED_while(bmedata s) {
 			Paint_DrawLine(102, 86, 104, 86, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 			Paint_DrawLine(101, 85, 101, 83, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 			Paint_DrawString_EN(106, 80, temperature_unit, &Font20, WHITE, WHITE);
-			OLED_1in5_Display(BlackImage);
+			oled_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);
 			screensaver();				
 			break;
+		/*Draws the humidit droplet and prints the current humidity value*/
 		case 2:
 			printf("humidity: %s\r\n", humidity);	
 			Paint_droplet();
@@ -572,10 +585,11 @@ void OLED_while(bmedata s) {
 			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
 			Paint_DrawString_EN(64, 60, humidity, &Font20, WHITE, WHITE);
 			Paint_DrawString_EN(106, 80, humidity_unit, &Font20, WHITE, WHITE);
-			OLED_1in5_Display(BlackImage);
+			oled_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);	
 			screensaver();			
 			break;
+		/*Draws the pressure barometer and prints the current pressure value*/	
 		case 3:
 			printf("pressure: %s\r\n", pressure);
 			Paint_barometer();		
@@ -584,10 +598,11 @@ void OLED_while(bmedata s) {
 			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
 			Paint_DrawString_EN(64, 60, pressure, &Font20, WHITE, WHITE);
 			Paint_DrawString_EN(80, 80, pressure_unit, &Font20, WHITE, WHITE);
-			OLED_1in5_Display(BlackImage);
+			oled_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);	
 			screensaver();		
 			break;
+		/*Draws the air quality cloud and prints the current air_quality value*/
 		case 4:
 			printf("airquality: %s \r\n",gas_resistance);
 			Paint_Cloud();
@@ -597,23 +612,25 @@ void OLED_while(bmedata s) {
 			Paint_DrawLine(0, 20, 128, 20, WHITE, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
 			Paint_DrawString_EN(64, 60, gas_resistance, &Font20, WHITE, WHITE);
 			Paint_DrawString_EN(106, 80, gas_resistance_unit, &Font20, WHITE, WHITE);
-			OLED_1in5_Display(BlackImage);
+			oled_1in5_Display(BlackImage);
 			DEV_Delay_ms(100);		
 			screensaver();	
 			break;
+		/*shut down message followed by shut downing the display, sensor and buzzer*/
 		case 5:
 			Paint_DrawString_EN(25, 5, "Shutting Down", &Font16, WHITE, WHITE);
-			OLED_1in5_Display(BlackImage);
+			oled_1in5_Display(BlackImage);
 			DEV_Delay_ms(2000);
 			Paint_Clear(BLACK);
-			OLED_1in5_Clear();
+			oled_1in5_Clear();
 			DEV_ModuleExit();
 			sensor_disable(sensor, data);
 			system("sudo shutdown -r now");
 			break;
+		/*shows a black image(only appliable when function screen_saver is used)*/	
 		case 6:
 		Paint_Clear(BLACK);
-		OLED_1in5_Display(BlackImage);
+		oled_1in5_Display(BlackImage);
 		break;
 	}
 	}

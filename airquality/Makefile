@@ -1,5 +1,5 @@
 DIR_Config   = ./lib/Config
-DIR_OLED     = ./lib/OLED
+DIR_oled     = ./lib/oled
 DIR_FONTS    = ./lib/Fonts
 DIR_GUI      = ./lib/GUI
 DIR_Examples = ./examples

@@ -92,9 +92,9 @@ void DEV_Delay_ms(UDOUBLE xms)
 
 static void DEV_GPIO_Init(void)
 {
-    DEV_GPIO_Mode(OLED_CS, 1);
-    DEV_GPIO_Mode(OLED_RST, 1);
-    DEV_GPIO_Mode(OLED_DC, 1);
+    DEV_GPIO_Mode(oled_CS, 1);
+    DEV_GPIO_Mode(oled_RST, 1);
+    DEV_GPIO_Mode(oled_DC, 1);
 }
 
 /******************************************************************************
@@ -122,8 +122,8 @@ UBYTE DEV_ModuleInit(void)
         bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                     //set CE0
         bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);     //enable cs0
     #elif USE_IIC
-        OLED_DC_0;
-        OLED_CS_0;
+        oled_DC_0;
+        oled_CS_0;
         printf("USE_IIC\r\n");
         bcm2835_i2c_begin();	
         bcm2835_i2c_setSlaveAddress(0x3c);
@@ -144,8 +144,8 @@ UBYTE DEV_ModuleInit(void)
         //wiringPiSPISetup(0,9000000);
         wiringPiSPISetupMode(0, 9000000, 3);
     #elif USE_IIC
-        OLED_DC_0;
-        OLED_CS_0;
+        oled_DC_0;
+        oled_CS_0;
         printf("USE_IIC\r\n");
         fd = wiringPiI2CSetup(0x3c);
     #endif
@@ -157,8 +157,8 @@ UBYTE DEV_ModuleInit(void)
         DEV_HARDWARE_SPI_beginSet("/dev/spidev0.0",SPI_MODE_3,10000000);
     #elif USE_IIC   
         printf("USE_IIC\r\n");		
-        OLED_DC_0;
-        OLED_CS_0;
+        oled_DC_0;
+        oled_CS_0;
         DEV_HARDWARE_I2C_begin("/dev/i2c-1");
         DEV_HARDWARE_I2C_setSlaveAddress(0x3c);
     #endif
@@ -232,14 +232,14 @@ void DEV_ModuleExit(void)
 
 
 #elif USE_WIRINGPI_LIB
-    OLED_CS_0;
-	OLED_RST_1;
-	OLED_DC_0;
+    oled_CS_0;
+	oled_RST_1;
+	oled_DC_0;
 
 #elif USE_DEV_LIB
-    OLED_CS_0;
-	OLED_RST_1;
-	OLED_DC_0;
+    oled_CS_0;
+	oled_RST_1;
+	oled_DC_0;
     DEV_HARDWARE_SPI_end();
     DEV_HARDWARE_I2C_end();
 #endif

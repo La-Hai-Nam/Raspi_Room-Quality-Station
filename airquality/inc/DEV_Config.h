@@ -38,20 +38,20 @@
 #define UWORD   uint16_t
 #define UDOUBLE uint32_t
 
-//OLED Define
-#define OLED_CS         8		
-#define OLED_RST        27	
-#define OLED_DC         25	
+//oled Define
+#define oled_CS         8		
+#define oled_RST        27	
+#define oled_DC         25	
 
 
-#define OLED_CS_0      DEV_Digital_Write(OLED_CS,0)
-#define OLED_CS_1      DEV_Digital_Write(OLED_CS,1)
+#define oled_CS_0      DEV_Digital_Write(oled_CS,0)
+#define oled_CS_1      DEV_Digital_Write(oled_CS,1)
 
-#define OLED_RST_0      DEV_Digital_Write(OLED_RST,0)
-#define OLED_RST_1      DEV_Digital_Write(OLED_RST,1)
+#define oled_RST_0      DEV_Digital_Write(oled_RST,0)
+#define oled_RST_1      DEV_Digital_Write(oled_RST,1)
 
-#define OLED_DC_0       DEV_Digital_Write(OLED_DC,0)
-#define OLED_DC_1       DEV_Digital_Write(OLED_DC,1)
+#define oled_DC_0       DEV_Digital_Write(oled_DC,0)
+#define oled_DC_1       DEV_Digital_Write(oled_DC,1)
 
 /*------------------------------------------------------------------------------------------------------*/
 

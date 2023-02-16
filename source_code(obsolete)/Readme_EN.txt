@@ -9,7 +9,7 @@
 * | Info        :   Here is an English version of the documentation for your quick use.
 ******************************************************************************/
 This file is to help you use this routine.
-Since our OLED screens are getting more and more, it is not convenient for our maintenance, so all the OLED screen programs are made into one project.
+Since our oled screens are getting more and more, it is not convenient for our maintenance, so all the oled screen programs are made into one project.
 A brief description of the use of this project is here:
 
 1. Basic information:
@@ -20,7 +20,7 @@ This routine can view the corresponding test routines in the examples\ of the pr
 2. Pin connection:
 Pin connection you can use STM32CubeMX to open the project file oled_demo.ioc for viewing, which is also repeated here:
 SPI:
-	OLED   =>    RPI(BCM)
+	oled   =>    RPI(BCM)
 	VCC    ->    3.3
 	GND    ->    GND
 	DIN    ->    10(MOSI)
@@ -30,7 +30,7 @@ SPI:
 	RST    ->    27
 
 IIC:
-	OLED   =>    RPI(BCM)
+	oled   =>    RPI(BCM)
 	VCC    ->    3.3
 	GND    ->    GND
 	DIN    ->    2(SDA)
@@ -41,21 +41,21 @@ IIC:
 
 3. Basic use:
 Since this project is a comprehensive project, for use, you may need to read the following:
-Please pay attention to which OLED you bought.
+Please pay attention to which oled you bought.
 eg 1:
-	If you bought a 1.3-inch OLED Module (C), enter it in your home directory:
+	If you bought a 1.3-inch oled Module (C), enter it in your home directory:
 		sudo make clean
 		sudo make
 		sudo ./main 1.3c
 
 eg 2:
-	If you buy a 1.5-inch RGB OLED Module, enter it in your home directory:
+	If you buy a 1.5-inch RGB oled Module, enter it in your home directory:
 		sudo make clean
 		sudo make
 		sudo ./main 1.5rgb
 
 eg 3:
-	If you buy a 0.91inch OLED Module, please note that since the Module only has IIC interface and the routine defaults to SPI, you need to modify it in config.h, that is:
+	If you buy a 0.91inch oled Module, please note that since the Module only has IIC interface and the routine defaults to SPI, you need to modify it in config.h, that is:
 		#define USE_SPI_4W 	1
 		#define USE_IIC 	0
 	Modified to:
@@ -81,12 +81,12 @@ Config\: This directory is a hardware interface layer file. You can see many def
 		#define IIC_CMD        0X00
 		#define IIC_RAM        0X40
     GPIO read/write：
-		#define OLED_CS_0		HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET)
-		#define OLED_CS_1		HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_SET)
-		#define OLED_DC_0		HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_RESET)
-		#define OLED_DC_1		HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_SET)
-		#define OLED_RST_0		HAL_GPIO_WritePin(OLED_RST_GPIO_Port, OLED_RST_Pin, GPIO_PIN_RESET)
-		#define OLED_RST_1		HAL_GPIO_WritePin(OLED_RST_GPIO_Port, OLED_RST_Pin, GPIO_PIN_SET)
+		#define oled_CS_0		HAL_GPIO_WritePin(oled_CS_GPIO_Port, oled_CS_Pin, GPIO_PIN_RESET)
+		#define oled_CS_1		HAL_GPIO_WritePin(oled_CS_GPIO_Port, oled_CS_Pin, GPIO_PIN_SET)
+		#define oled_DC_0		HAL_GPIO_WritePin(oled_DC_GPIO_Port, oled_DC_Pin, GPIO_PIN_RESET)
+		#define oled_DC_1		HAL_GPIO_WritePin(oled_DC_GPIO_Port, oled_DC_Pin, GPIO_PIN_SET)
+		#define oled_RST_0		HAL_GPIO_WritePin(oled_RST_GPIO_Port, oled_RST_Pin, GPIO_PIN_RESET)
+		#define oled_RST_1		HAL_GPIO_WritePin(oled_RST_GPIO_Port, oled_RST_Pin, GPIO_PIN_SET)
     SPI transmission：
         void SPI4W_Write_Byte(UBYTE value);
     IIC transmission：
@@ -97,7 +97,7 @@ Config\: This directory is a hardware interface layer file. You can see many def
     The process of module initialization and exit：
         UBYTE	System_Init(void);
         void	System_Exit(void);
-        Note: Here is the processing of SOME GPIO before and after using OLED
+        Note: Here is the processing of SOME GPIO before and after using oled
 		
 GUI\: This directory is some basic image processing functions, in GUI_Paint.c(.h):
     Common image processing: creating graphics, flipping graphics, mirroring graphics, setting pixels, clearing screens, etc.
@@ -116,5 +116,5 @@ GUI\: This directory is some basic image processing functions, in GUI_Paint.c(.h
         font12CN: 16*21
         font24CN: 32*41
         
-OLED\: This screen is the OLED screen driver function;
-Examples\: This is the test program for the OLED screen. You can see the specific usage method in it.
+oled\: This screen is the oled screen driver function;
+Examples\: This is the test program for the oled screen. You can see the specific usage method in it.

@@ -1,11 +1,11 @@
 DIR_Config   = ./lib/Config
-DIR_OLED     = ./lib/OLED
+DIR_oled     = ./lib/oled
 DIR_FONTS    = ./lib/Fonts
 DIR_GUI      = ./lib/GUI
 DIR_Examples = ./examples
 DIR_BIN      = ./bin
 
-OBJ_C = $(wildcard ${DIR_OLED}/*.c ${DIR_Config}/*.c ${DIR_GUI}/*.c ${DIR_Examples}/*.c ${DIR_FONTS}/*.c)
+OBJ_C = $(wildcard ${DIR_oled}/*.c ${DIR_Config}/*.c ${DIR_GUI}/*.c ${DIR_Examples}/*.c ${DIR_FONTS}/*.c)
 OBJ_O = $(patsubst %.c,${DIR_BIN}/%.o,$(notdir ${OBJ_C}))
 
 TARGET = main
@@ -31,16 +31,16 @@ ${TARGET}:${OBJ_O}
 	$(CC) -pthread $(CFLAGS) $(OBJ_O) -o $@ $(LIB)
     
 ${DIR_BIN}/%.o:$(DIR_Examples)/%.c
-	$(CC) -pthread $(CFLAGS) -c  $< -o $@ -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_OLED)
+	$(CC) -pthread $(CFLAGS) -c  $< -o $@ -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_oled)
     
-${DIR_BIN}/%.o:$(DIR_OLED)/%.c
+${DIR_BIN}/%.o:$(DIR_oled)/%.c
 	$(CC) -pthread $(CFLAGS) -c  $< -o $@ -I $(DIR_Config)
     
 ${DIR_BIN}/%.o:$(DIR_FONTS)/%.c
 	$(CC) -pthread $(CFLAGS) -c  $< -o $@
     
 ${DIR_BIN}/%.o:$(DIR_GUI)/%.c
-	$(CC) -pthread $(CFLAGS) -c  $< -o $@ -I $(DIR_Config)  -I $(DIR_OLED) -I $(DIR_Examples)
+	$(CC) -pthread $(CFLAGS) -c  $< -o $@ -I $(DIR_Config)  -I $(DIR_oled) -I $(DIR_Examples)
 
 ${DIR_BIN}/%.o:$(DIR_Config)/%.c
 	$(CC) -pthread $(CFLAGS) -c  $< -o $@ $(LIB)

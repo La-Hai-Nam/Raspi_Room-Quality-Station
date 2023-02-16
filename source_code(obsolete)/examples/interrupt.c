@@ -141,7 +141,7 @@ eventHandler button_pressed(){
 }
 
 eventHandler end_button_pressed(){
-	OLED_1in5_Clear();
+	oled_1in5_Clear();
     return 0;
 }
 
