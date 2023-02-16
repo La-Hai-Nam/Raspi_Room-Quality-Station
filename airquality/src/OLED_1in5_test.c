@@ -40,7 +40,7 @@ int first_time;
 int second_time;
 
 /******************************************************************************
-function:	paint temperature thermometer
+function:	paint temperature thermometer for temperature
 Info:
 ******************************************************************************/
 void Paint_thermo(){
@@ -124,7 +124,7 @@ void Paint_thermo(){
 }
 
 /******************************************************************************
-function:	paint humidity droplet
+function:	paint humidity droplet for humidity
 Info:
 ******************************************************************************/
 void Paint_droplet(){
@@ -213,7 +213,7 @@ void Paint_droplet(){
 }
 
 /******************************************************************************
-function:	paint pressure barometer
+function:	paint pressure barometer for pressure
 Info:
 ******************************************************************************/
 void Paint_barometer(){
@@ -346,7 +346,10 @@ void Paint_barometer(){
 	Paint_DrawLine(34, 77, 34, 81, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 	Paint_DrawLine(35, 78, 35, 80, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 }
-
+/******************************************************************************
+function:	Paint cloud for air quality
+Info:
+******************************************************************************/
 void Paint_Cloud(){
 	Paint_DrawLine(29, 51, 38, 51, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
 	Paint_DrawLine(27, 52, 40, 52, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
@@ -432,7 +435,7 @@ void screensaver(){
 
 }
 /******************************************************************************
-function:	Initialize Display, Black image and interrupt button on GPIO5 for push button:
+function:	Initialize Display, Black image and buzzer
 Info:
 ******************************************************************************/
 
@@ -470,6 +473,7 @@ void OLED_1in5_test(void)
 
 /******************************************************************************
 function:	Get sensor data from bme_test.c and display sensor data on the OLEDdisplay depending on count (if button_pressed() == true){ count++; }:
+Parameter: bmedata "s" is a struct containing the sensordata as a double value double temperature, double humidity, double pressure and double gas_resistance
 Info:
 ******************************************************************************/
 
@@ -503,7 +507,9 @@ void OLED_while(bmedata s) {
 	DEV_Delay_ms(500);
 	Paint_Clear(BLACK);
 
-	/*************************** IAQ calculation *************************************/
+	/*************************** IAQ calculation *************************************
+	Info: calculation of the air quality value depending on gas_resistance and humidity
+	******************************************************************************/
 
 	float current_humidity = s.humidity;
 	if (current_humidity >= 38 && current_humidity <= 42)
@@ -541,11 +547,13 @@ void OLED_while(bmedata s) {
 	snprintf(gas_resistance, MAX, "%.1f",air_quality_score);
 	
 	s.gas_resistance = (double)air_quality_score;
+	//start buzzer depending on bmedata "s" which contains all 4 sensordata double temperature, double humidity, double pressure and double gas_resistance
 	set_buzzer_alarm(s);
 	
 
 /*************************** different states of display **********************/	
-	switch (get_count()) {	
+	switch (get_count()) {
+		/*start message*/	
 		case 0:
 			Paint_DrawString_EN(22, 5, "Air Quality", &Font12, WHITE, WHITE);
 			Paint_DrawString_EN(37, 25, "Station", &Font12, WHITE, WHITE);
@@ -555,6 +563,7 @@ void OLED_while(bmedata s) {
 			Paint_Clear(BLACK);
 			//increment_count();
 			change_count(1);
+		/*Draws the thermometer and prints the current temperature value*/	
 		case 1:
 			printf("temperature: %s\r\n", temperature);	
 			Paint_thermo();
@@ -571,6 +580,7 @@ void OLED_while(bmedata s) {
 			DEV_Delay_ms(100);
 			//screensaver();				
 			break;
+		/*Draws the humidit droplet and prints the current humidity value*/	
 		case 2:
 			printf("humidity: %s\r\n", humidity);	
 			Paint_droplet();
@@ -583,6 +593,7 @@ void OLED_while(bmedata s) {
 			DEV_Delay_ms(100);	
 			//screensaver();			
 			break;
+		/*Draws the pressure barometer and prints the current pressure value*/	
 		case 3:
 			printf("pressure: %s\r\n", pressure);
 			Paint_barometer();		
@@ -595,6 +606,7 @@ void OLED_while(bmedata s) {
 			DEV_Delay_ms(100);	
 			//screensaver();		
 			break;
+		/*Draws the air quality cloud and prints the current air_quality value*/	
 		case 4:
 			printf("airquality: %s \r\n",gas_resistance);
 			Paint_Cloud();
@@ -608,6 +620,7 @@ void OLED_while(bmedata s) {
 			DEV_Delay_ms(100);		
 			//screensaver();	
 			break;
+		/*shut down message followed by shut downing the display, sensor and buzzer*/	
 		case 5:
 			Paint_DrawString_EN(25, 5, "Shutting Down", &Font16, WHITE, WHITE);
 			OLED_1in5_Display(BlackImage);
@@ -620,6 +633,7 @@ void OLED_while(bmedata s) {
 			buzzer_off();
 			buzzer_end();	
 			break;
+		/*shows a black image(only appliable when function screen_saver is used)*/	
 		case 6:
 		Paint_Clear(BLACK);
 		OLED_1in5_Display(BlackImage);

@@ -16,6 +16,7 @@ int count = 0;
 int first_count = 1;
 int do_once = 0;
 int procfile_fd;
+
 /******************************************************************************
 function:	ALL sysfs functions to use GPIO_Pins 
 Info:
@@ -203,7 +204,7 @@ void onoff_button_pressed(){
     count = 5;
 }
 /******************************************************************************
-function:	global variable sharing functions that are mainly used in OLED_1in5_test.c
+function:	global variable sharing functions that are mainly used in OLED_1in5_test.c to change the shown measurement
 Info:
 ******************************************************************************/
 
