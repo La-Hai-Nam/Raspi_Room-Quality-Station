@@ -24,7 +24,7 @@ Info:       Gives a system call to the Pi to activate the buzzer pin.
 void buzzer_initialize(){
     GPIO_export(buzzer_pin);
     //GPIO_direction(buzzer_pin, "out");
-	system("sudo echo \"out\" > /sys/class/gpio/gpio12/direction");
+	system("sudo echo \"out\" > /sys/class/gpio/gpio12/direction");     //Because of the malfunction of GPIO_direction()
 }
 
 
