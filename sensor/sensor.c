@@ -235,16 +235,16 @@ int8_t sensor_disable(struct bme680_dev* sensor, struct bme680_field_data* data)
 }
 
 
-/* @brief Gets every meassurement from the sensor.
+/* @brief Gets every measurement from the sensor.
 *
-*  @param *sensor The sensor instance that we want the meassurements from
+*  @param *sensor The sensor instance that we want the measurements from
 *  @param *data This is where the received data gets stored.
 * 
 *  @return Success / Failure code.
 */
 int8_t sensor_get_all_data(struct bme680_dev* sensor, struct bme680_field_data* data) {
 	
-	/* the time it takes for one meassurement to complete */
+	/* the time it takes for one measurement to complete */
 	uint16_t meas_period;
 
 	/* fetch the measurement period from the sensor instance */
@@ -255,7 +255,7 @@ int8_t sensor_get_all_data(struct bme680_dev* sensor, struct bme680_field_data* 
 	int8_t rslt = BME680_OK;
 	
 	do {
-		/* read every meassurement form the sensor */
+		/* read every measurement form the sensor */
 		rslt = bme680_get_sensor_data(data, sensor);
 		if(rslt != 0) printf("rslt: %d\n", rslt);	
 		
@@ -266,7 +266,7 @@ int8_t sensor_get_all_data(struct bme680_dev* sensor, struct bme680_field_data* 
 		/* Wait for the measurement to complete */
 		user_delay_ms(meas_period); 			
 	}
-	/* meassure until there is a valid meassurement of all data */
+	/* measure until there is a valid measurement of all data */
 	while(!(data->status & BME680_GASM_VALID_MSK) || !(data->status & BME680_HEAT_STAB_MSK)); 
 	
 	return rslt;	

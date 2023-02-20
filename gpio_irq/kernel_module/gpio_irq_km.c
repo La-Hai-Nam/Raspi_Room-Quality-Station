@@ -38,7 +38,7 @@ unsigned int irq_number_gpio_6;
 /* @brief This functionis called when the user wants to read the procfile
 *
 *  Writes the measurement mode number into the userbuffer
-*
+*  
 *  @return bytes written
 */
 static ssize_t procfile_read(struct file *file, char __user *ubuf, size_t count, loff_t *ppos) 

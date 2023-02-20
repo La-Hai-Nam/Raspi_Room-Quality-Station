@@ -26,8 +26,7 @@
 * 
 *  @return should not return.
 */
-int main(int argc, char *argv[] )
-{
+int main(int argc, char *argv[] ) {
 	
 	/* Default values */	
 	int ms_delay = 1000;
