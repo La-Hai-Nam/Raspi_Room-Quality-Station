@@ -1,0 +1,2 @@
+All files that are found here are work contributed by Maximilian Lauch.
+Exceptions are the BME680 driver files from Bosch: [bme680.c](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/Maximilian_Lausch_work/sensor/bme680.c), [bme680.h](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/Maximilian_Lausch_work/sensor/bme680.h) and [bme680_defs.h](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/Maximilian_Lausch_work/sensor/bme680_defs.h).
