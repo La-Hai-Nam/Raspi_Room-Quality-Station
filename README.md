@@ -33,6 +33,7 @@ To have an overview about the whole project it is recommended to read the [plann
 
 ### Milestone presentations
 - [M1 presentation](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/main/Documentation/PCSE_M1-Vortrag_TeamD.pdf)
+- [M2 presentation](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/main/Documentation/PCSE_M2-Vortrag_TeamD.pdf)
 
 ### Changes after milestone presentations
 - Name change from "Weather station" to "Room quality station" after M1 presentation; The cause was to find a more suitable name
