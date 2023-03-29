@@ -185,7 +185,7 @@ int8_t sensor_init(struct bme680_dev* sensor) {
 
 	/* Set the remaining gas sensor settings and link the heating profile */
 	sensor->gas_sett.run_gas = BME680_ENABLE_GAS_MEAS;
-	/* Create a ramp heat waveform in 3 steps */
+	/* Create a ramp heat waveform */
 	sensor->gas_sett.heatr_temp = 320; /* degree Celsius */
 	sensor->gas_sett.heatr_dur = 150; /* milliseconds */
 
@@ -266,7 +266,7 @@ int8_t sensor_get_all_data(struct bme680_dev* sensor, struct bme680_field_data* 
 		/* Wait for the measurement to complete */
 		user_delay_ms(meas_period); 			
 	}
-	/* measure until there is a valid measurement of all data */
+	/* measure until there is are valid measurements */
 	while(!(data->status & BME680_GASM_VALID_MSK) || !(data->status & BME680_HEAT_STAB_MSK)); 
 	
 	return rslt;	
