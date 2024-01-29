@@ -1,5 +1,6 @@
 # Project Room-Quality-Station / 2022WS_team4
 
+For a detailed description of how this project has been made refer to the [wiki](https://github.com/La-Hai-Nam/Raspi_Room-Quality-Station/wiki).
 
 ## Purpose
 This project shall fullfill the [planning phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Planning), the [concept phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Concept), the [design phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Design), the [implementation phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Implementation), the [testing phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Test) and the [finalization phase](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/wikis/Finalization) of developing and building a device called Room-Quality-Station. 
