@@ -48,5 +48,5 @@ To have an overview about the whole project it is recommended to read starting w
 
 
 ## Roadmap
-Click to see a roadmap of the whole project: [Link](https://gitlab.rz.htw-berlin.de/c71_cse/2022ws_team4/-/blob/main/Documentation/Roadmap.png)
+Click to see a roadmap of the whole project: [Link](https://github.com/La-Hai-Nam/Raspi_Room-Quality-Station/blob/main/Documentation/Roadmap.png)
 
